@@ -1,0 +1,21 @@
+<h1>Listing catalogues</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @catalogues.each do |catalogue| %>
+  <tr>
+    <td><%= link_to 'Show', catalogue %></td>
+    <td><%= link_to 'Edit', edit_catalogue_path(catalogue) %></td>
+    <td><%= link_to 'Destroy', catalogue, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Catalogue', new_catalogue_path %>

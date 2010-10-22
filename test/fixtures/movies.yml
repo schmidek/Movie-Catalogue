@@ -1,0 +1,6 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+shrek:
+  id: 1
+  catalogue_id: 1
+  movie_info_id: 1
