@@ -10,14 +10,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101019060541) do
+ActiveRecord::Schema.define(:version => 20101022193500) do
 
   create_table "catalogues", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "movie_infos", :force => true do |t|
+  create_table "movie_holders", :force => true do |t|
+    t.integer  "catalogue_id"
+    t.integer  "movie_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "movies", :force => true do |t|
     t.string   "name"
     t.string   "cover"
     t.string   "trailer"
@@ -27,15 +34,8 @@ ActiveRecord::Schema.define(:version => 20101019060541) do
     t.integer  "rating"
     t.text     "summary"
     t.text     "notes"
-    t.integer  "movie_id"
+    t.integer  "movie_holder_id"
     t.integer  "revision_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "movies", :force => true do |t|
-    t.integer  "catalogue_id"
-    t.integer  "movie_info_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

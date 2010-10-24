@@ -1,8 +1,7 @@
 Site::Application.routes.draw do
   resources :catalogues
 
-  resources :user_sessions, :users
-  resources :movie_infos, :path => "movies", :controller => "movies", :as => "movies"
+  resources :user_sessions, :users, :movies
   resource :account, :controller => "users"
 
   root :to => "user_sessions#new"

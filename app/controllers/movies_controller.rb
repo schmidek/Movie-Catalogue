@@ -15,7 +15,7 @@ class MoviesController < ApplicationController
   # GET /movies/1
   # GET /movies/1.xml
   def show
-    @movie = MovieInfo.find(params[:id])
+    @movie = Movie.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -26,7 +26,7 @@ class MoviesController < ApplicationController
   # GET /movies/new
   # GET /movies/new.xml
   def new
-    @movie = MovieInfo.new
+    @movie = Movie.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -36,18 +36,18 @@ class MoviesController < ApplicationController
 
   # GET /movies/1/edit
   def edit
-    @movie = MovieInfo.find(params[:id])
+    @movie = Movie.find(params[:id])
   end
 
   # POST /movies
   # POST /movies.xml
   def create
-    @movie = MovieInfo.new(params[:movie_info])
+    @movie = Movie.new(params[:movie])
 
     respond_to do |format|
       if @movie.valid?
-        current_user.catalogue.create_revision(@movie)
-        format.html { redirect_to(movie_path(@movie), :notice => 'Movie was successfully created.') }
+        current_user.catalogue.create_revision(nil,params[:movie])
+        format.html { redirect_to(@movie, :notice => 'Movie was successfully created.') }
         format.xml  { render :xml => @movie, :status => :created, :location => @movie }
       else
         format.html { render :action => "new" }
@@ -59,14 +59,12 @@ class MoviesController < ApplicationController
   # PUT /movies/1
   # PUT /movies/1.xml
   def update
-    dbmovie = MovieInfo.find(params[:id])
-    @movie = MovieInfo.new(params[:id])
-    @movie.movie = dbmovie.movie
-
+    dbmovie = Movie.find(params[:id])
+    @movie = Movie.new(params[:movie])
     respond_to do |format|
       if @movie.valid?
-        current_user.catalogue.create_revision(@movie)
-        format.html { redirect_to(movie_path(@movie), :notice => 'Movie was successfully updated.') }
+        current_user.catalogue.create_revision(dbmovie.movie_holder, params[:movie])
+        format.html { redirect_to(@movie, :notice => 'Movie was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -78,7 +76,7 @@ class MoviesController < ApplicationController
   # DELETE /movies/1
   # DELETE /movies/1.xml
   def destroy
-    @movie = MovieInfo.find(params[:id])
+    @movie = Movie.find(params[:id])
     @movie.destroy
 
     respond_to do |format|

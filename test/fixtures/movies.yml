@@ -2,5 +2,6 @@
 
 shrek:
   id: 1
-  catalogue_id: 1
-  movie_info_id: 1
+  name: Shrek
+  revision_id: 1
+  movie_holder_id: 1

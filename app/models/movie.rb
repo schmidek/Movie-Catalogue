@@ -1,5 +1,5 @@
 class Movie < ActiveRecord::Base
-  belongs_to :catalogue
-  belongs_to :movie_info
-  
+  validates :name, :presence => true
+  belongs_to :movie_holder
+  belongs_to :revision
 end
