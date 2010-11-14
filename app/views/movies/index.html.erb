@@ -1,39 +1,20 @@
 <h1>Listing movies</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Cover</th>
-    <th>Trailer</th>
-    <th>Imdb</th>
-    <th>Year</th>
-    <th>Added</th>
-    <th>Rating</th>
-    <th>Summary</th>
-    <th>Notes</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<div>
 
-<% @movies.each do |movie| %>
-  <tr>
-    <td><%= movie.name %></td>
-    <td><%= movie.cover %></td>
-    <td><%= movie.trailer %></td>
-    <td><%= movie.imdb %></td>
-    <td><%= movie.year %></td>
-    <td><%= movie.added %></td>
-    <td><%= movie.rating %></td>
-    <td><%= movie.summary %></td>
-    <td><%= movie.notes %></td>
-    <td><%= link_to 'Show', movie_path(movie) %></td>
-    <td><%= link_to 'Edit', edit_movie_path(movie) %></td>
-    <td><%= link_to 'Destroy', movie_path(movie), :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+	<div id="leftdiv">
+		<div id="listview">
+			<table id="moviegrid"></table>
+			<div id="movienav"></div>
+		</div>
+	</div>
+	
+	<div id="rightdiv">
+		<div id="itemview"></div>
+	</div>
 
-<br />
+</div>
 
-<%= link_to 'New Movie', new_movie_path %>
+<style type="text/css">
+	#jqgh_name,#jqgh_year,#jqgh_added { font-size:1.4em }
+</style>

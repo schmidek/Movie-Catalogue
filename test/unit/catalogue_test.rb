@@ -37,4 +37,12 @@ class CatalogueTest < ActiveSupport::TestCase
     assert( Movie.find_by_name("Shrek2").movie_holder != nil, "Movie must have a movie_holder")
   end
   
+  #test "find the difference between two hashes" do
+  #  assert_equal({:name => "aaa"}, {:name => "aaa"}.diff(Movie.find(1).attributes))
+  #end
+  
+  test "get current revision number" do
+	assert_equal(1, Catalogue.find(1).current_revision_number, "Revision numbers must match")
+  end
+  
 end

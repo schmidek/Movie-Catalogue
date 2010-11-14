@@ -38,5 +38,7 @@ module Site
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+    
+    config.tmdb_api_key = "c26a023c47dae0a687567a1fa21001fc";
   end
 end

@@ -1,5 +1,5 @@
 class UserSessionsController < ApplicationController
-  before_filter :require_no_user, :only => [:new, :create]
+  before_filter :require_no_user, :only => [:new, :create, :create_api]
   before_filter :require_user, :only => :destroy
   
   def new
@@ -21,4 +21,16 @@ class UserSessionsController < ApplicationController
     flash[:notice] = "Logout successful!"
     redirect_back_or_default new_user_session_url
   end
+  
+  def create_api
+	@user_session = UserSession.new(params)
+	respond_to do |format|
+	    if @user_session.save
+			format.json { render :json => { :api_key => current_user.single_access_token } }
+	    else
+	        format.json { render :json => { :error => 404 } }
+	    end
+    end
+  end
+  
 end

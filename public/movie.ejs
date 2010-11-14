@@ -1,0 +1,38 @@
+<div id="leftItemView">
+	<p>
+		<label>Name:</label>
+		<span><%= movie.name %></span>
+	</p>
+	<p>
+		<label>Year Released:</label>
+		<span><%= movie.year %></span>
+	</p>
+	<p>
+		<label>Genre:</label>
+	</p>
+	<p>
+		<label>Format:</label>
+	</p>
+	<p>
+		<label>Rating:</label>
+	</p>
+	<p>
+		<label>Date Added:</label>
+		<span><%= movie.added %></span>
+	</p>
+	<p>
+		<label>Summary:</label>
+		<span><%= movie.summary %></span>
+	</p>
+	<p>
+		<label>Notes:</label>
+		<span><%= movie.notes %></span>
+	</p>
+	<p>
+		<button type="button" id="editMovie">Edit</button>
+	</p>
+</div>
+
+<div id="rightItemView">
+	<%= img_tag(movie.cover) %>
+</div>

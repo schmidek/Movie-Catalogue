@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20101022193500) do
   create_table "revisions", :force => true do |t|
     t.integer  "catalogue_id"
     t.integer  "user_id"
+    t.integer  "number"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

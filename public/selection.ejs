@@ -1,0 +1,6 @@
+<div id="choices">
+<% var partial = new EJS({ url: '/partialSelection.ejs'}); %>
+<% for ( var i = 0; i < movies.length; i++ ){ %>
+  <%= partial.render({ movie: movies[i] }) %>
+<% } %>
+</div>
