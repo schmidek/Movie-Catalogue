@@ -1,7 +1,7 @@
 class Catalogue < ActiveRecord::Base
-  has_many :movie_holders
-  has_many :revisions
+  has_many :movies
   has_many :users
+  has_many :revisions
   
   def all_movies
     return movie_holders.collect { |m| m.movie }
@@ -10,18 +10,24 @@ class Catalogue < ActiveRecord::Base
   def get_movies(page,limit,sidx,sord)
     offset = limit * (page -1)
     
-    movies = 
-    Movie.joins('LEFT OUTER JOIN movie_holders ON movie_holders.movie_id = movies.id')
-         .where('movie_holders.catalogue_id' => self.id)
-         .limit(limit).offset(offset)
-         .order(sidx + " " + sord)
-    count =
-    Movie.joins('LEFT OUTER JOIN movie_holders ON movie_holders.movie_id = movies.id')
-         .where('movie_holders.catalogue_id' => self.id)
-         .count
+#    movies = 
+#    Movie.joins('LEFT OUTER JOIN movie_holders ON movie_holders.movie_id = movies.id')
+#         .where('movie_holders.catalogue_id' => self.id)
+#         .limit(limit).offset(offset)
+#         .order(sidx + " " + sord)
+#    count =
+#    Movie.joins('LEFT OUTER JOIN movie_holders ON movie_holders.movie_id = movies.id')
+#         .where('movie_holders.catalogue_id' => self.id)
+#         .count
+     
+    page_movies = movies.limit(limit)
+                  .offset(offset)
+		          .order(sidx + " " + sord)
+	count = movies.count
+     
     total_pages = (count.to_f/limit.to_f).ceil
-    rows = Array.new(movies.length)
-    movies.each_with_index { |m, i| rows[i] = {"id" => m.id, "cell" => [m.name,m.year,m.added] } }
+    rows = Array.new(page_movies.length)
+    page_movies.each_with_index { |m, i| rows[i] = {"id" => m.id, "cell" => [m.name,m.year,m.added] } }
          
     return {
 		'records' => count,

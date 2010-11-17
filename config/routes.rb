@@ -3,19 +3,20 @@ Site::Application.routes.draw do
 
   get "tmdb/getInfo"
 
-  resources :catalogues
-
   resources :user_sessions do
     collection do
       get 'create_api'
     end
   end
   resources :users
-  resources :movies do
-    collection do
-	  get 'grid'
-	  post 'update_many'
-    end
+  
+  resources :catalogues do
+	resources :movies do
+		collection do
+			get 'grid'
+			post 'update_many'
+		end
+	end
   end
   resource :account, :controller => "users"
 

@@ -10,8 +10,8 @@ class CreateMovies < ActiveRecord::Migration
       t.integer :rating
       t.text :summary
       t.text :notes
-      t.integer :movie_holder_id
-      t.integer :revision_id
+      t.integer :catalogue_id
+      t.boolean :active, :null => false, :default => true
 
       t.timestamps
     end

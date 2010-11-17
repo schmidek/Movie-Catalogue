@@ -1,9 +1,11 @@
 class CreateRevisions < ActiveRecord::Migration
   def self.up
     create_table :revisions do |t|
-      t.integer :catalogue_id
+      t.string :change_type
+      t.text :diff
+      t.integer :movie_id
       t.integer :user_id
-      t.integer :number
+      t.integer :catalogue_id
 
       t.timestamps
     end

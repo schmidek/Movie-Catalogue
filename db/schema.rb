@@ -34,16 +34,18 @@ ActiveRecord::Schema.define(:version => 20101022193500) do
     t.integer  "rating"
     t.text     "summary"
     t.text     "notes"
-    t.integer  "movie_holder_id"
-    t.integer  "revision_id"
+    t.integer  "catalogue_id"
+    t.boolean  "active",       :default => true, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "revisions", :force => true do |t|
-    t.integer  "catalogue_id"
+    t.string   "change_type"
+    t.text     "diff"
+    t.integer  "movie_id"
     t.integer  "user_id"
-    t.integer  "number"
+    t.integer  "catalogue_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,6 +1,10 @@
 class MoviesController < ApplicationController
-  before_filter :require_user
+  before_filter :require_user, :require_catalogue
   protect_from_forgery :except=>:create
+  
+  def require_catalogue
+	@catalogue = Catalogue.find(params[:catalogue_id])
+  end
 
   # GET /movies
   # GET /movies.xml
@@ -17,7 +21,7 @@ class MoviesController < ApplicationController
 	sidx = params[:sidx]
 	sord = params[:sord]
 	
-	@movies = current_user.catalogue.get_movies(page,limit,sidx,sord)
+	@movies = @catalogue.get_movies(page,limit,sidx,sord)
 	
 	respond_to do |format|
       format.json { render :json => @movies }
@@ -52,7 +56,7 @@ class MoviesController < ApplicationController
   # GET /movies/1
   # GET /movies/1.xml
   def show
-    @movie = Movie.find(params[:id])
+    @movie = @catalogue.movies.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -74,17 +78,17 @@ class MoviesController < ApplicationController
 
   # GET /movies/1/edit
   def edit
-    @movie = Movie.find(params[:id])
+    @movie = @catalogue.movies.find(params[:id])
   end
 
   # POST /movies
   # POST /movies.xml
   def create
-    @movie = Movie.new(params[:movie])
+    @movie = @catalogue.movies.build(params[:movie])
+    @movie.changed_by = current_user
 
     respond_to do |format|
-      if @movie.valid?
-        current_user.catalogue.create_revision(nil,params[:movie])
+      if @movie.save
         format.html { redirect_to(@movie, :notice => 'Movie was successfully created.') }
         format.xml  { render :xml => @movie, :status => :created, :location => @movie }
         format.json { render :json => {:success => true} }
@@ -99,11 +103,11 @@ class MoviesController < ApplicationController
   # PUT /movies/1
   # PUT /movies/1.xml
   def update
-    dbmovie = Movie.find(params[:id])
-    @movie = Movie.new(dbmovie.attributes.merge(params[:movie]))
+    @movie = @catalogue.movies.find(params[:id])
+    @movie.changed_by = current_user
+    
     respond_to do |format|
-      if @movie.valid?
-        current_user.catalogue.create_revision(dbmovie.movie_holder, dbmovie.attributes.merge(params[:movie]))
+      if @movie.update_attributes(params[:movie])
         format.html { redirect_to(@movie, :notice => 'Movie was successfully updated.') }
         format.xml  { head :ok }
         format.json { render :json => {:success => true} }
@@ -126,4 +130,5 @@ class MoviesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
 end
