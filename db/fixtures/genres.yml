@@ -1,0 +1,44 @@
+Drama:
+    name: Drama
+Animation:
+    name: Animation
+Adventure:
+    name: Adventure
+Comedy:
+    name: Comedy
+Family:
+    name: Family
+Fantasy:
+    name: Fantasy
+Romance:
+    name: Romance
+Horror:
+    name: Horror
+Thriller:
+    name: Thriller
+Action:
+    name: Action
+Crime:
+    name: Crime
+Mystery:
+    name: Mystery
+SciFi:
+    name: SciFi
+Biography:
+    name: Biography
+War:
+    name: War
+Western:
+    name: Western
+Sport:
+    name: Sport
+Musical:
+    name: Musical
+Music:
+    name: Music
+History:
+    name: History
+Documentary:
+    name: Documentary
+Short:
+    name: Short

@@ -38,7 +38,7 @@ var AddMovie = function(){
 	};
 	
 	self.search = function(name){
-		$.getJSON('../tmdb/search?name='+name, self.showChoices);
+		$.getJSON('/tmdb/search?name='+name, self.showChoices);
 	};
 	
 	self.showChoices = function(movies){
@@ -66,14 +66,14 @@ var AddMovie = function(){
 	};
 	
 	self.getInfo = function(id){
-		$.getJSON('../tmdb/getInfo?id='+id, function(data){self.addMovies(data[0]);});
+		$.getJSON('/tmdb/getInfo?id='+id, function(data){self.addMovies(data[0]);});
 	};
 	
 	self.addMovies = function(info){
 		var movie = new Object();
 		movie.name = info.name;
 		movie.added = new Date();
-		for(var i = 0; i < info.posters.length; i++){
+		for(var i in info.posters){
 			var poster = info.posters[i].image;
 			if(poster.size == "cover"){
 				movie.cover = poster.url;
@@ -82,7 +82,14 @@ var AddMovie = function(){
 		}
 		movie.year = info.released;
 		movie.summary = info.overview;
-		$(document).trigger('CURRENT_MOVIE_CHANGED',movie);
+		movie.imdb = info.imdb_id;
+		movie.trailer = info.trailer;
+		var genres = new Array();
+		for(var i in info.genres){
+			genres.push(info.genres[i].name);
+		}
+		movie.genres = genres;
+		$(document).trigger('CREATE_MOVIE',movie);
 	};
 	
 };
@@ -141,8 +148,10 @@ var ItemView = function($div){
 	
 	var showTemplate = new EJS({ url: '/movie.ejs'});
 	var editTemplate = new EJS({ url: '/editmovie.ejs'});
+	var createTemplate = new EJS({ url: '/createmovie.ejs'});
 		
 	$(document).bind('CURRENT_MOVIE_CHANGED',function(e,data){ self.updateCurrent(data); });
+	$(document).bind('CREATE_MOVIE',function(e,data){ self.pendingCreate(data); });
 	
 	self.updateCurrent = function(movie){
 		div.html(showTemplate.render({ movie: movie }));
@@ -162,10 +171,29 @@ var ItemView = function($div){
 				$form.attr("action") + ".json",
 				$form.serialize() + "&_method=put",
 				function(data){
-					alert(data.success);
+					//alert(data.success);
 				}
 			);
 			$(document).trigger('MOVIE_UPDATED',movie.id);
+			return false;
+		});
+	};
+	
+	self.pendingCreate = function(movie){
+		div.html(createTemplate.render({ movie: movie }));
+		$("#cancel").click(function(){
+			self.updateCurrent(movie);
+		});
+		$("#movieForm").submit(function(){
+			var $form = $("#movieForm");
+			$.post(
+				$form.attr("action") + ".json",
+				$form.serialize() + "&_method=post",
+				function(data){
+					//alert(data.success);
+				}
+			);
+			$(document).trigger('NEW_MOVIE');
 			return false;
 		});
 	};
@@ -191,6 +219,12 @@ var Controller = function(){
 		$("#moviegrid").trigger("reloadGrid"); 
 		$(document).trigger('INVALIDATE_CACHE',id);
 		self.updateSelected(id);
+	});
+	
+	$(document).bind('NEW_MOVIE',function(e){
+		$("#moviegrid").trigger("reloadGrid"); 
+		//TODO get id of new movie
+		self.updateSelected(1);
 	});
 	
 };

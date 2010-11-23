@@ -1,0 +1,10 @@
+test:
+    id: 1
+    login: "test"
+    email: "jschmidek@gmail.com"
+    crypted_password: "ceb12d51821e845fbbc80e25d8fe4d2d77dbf94f9edcd47db9bf49b06d84d0b74b19a79512fc6d55871deecbd81d2f91d0b0544de1531d7bae574e5ab84d0354"
+    password_salt: "vwnLQLueKDkSeXiZmPeL"
+    persistence_token: "755ebd3c7e266e3debb8199f6d0f29fb113f3335003f2bb156e5372108dd6925d85d06daf3c85b0cadc681d6cea3885ce6f8f13040e606b8eedba194aab73955"
+    single_access_token: "eVwAkxFeVli1rtnTNb"
+    perishable_token: "zPK037qKLEChrMbWS2B1"
+    catalogue_id: 1

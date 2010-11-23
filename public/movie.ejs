@@ -9,12 +9,15 @@
 	</p>
 	<p>
 		<label>Genre:</label>
+		<span><%= movie.genres.join(", ") %></span>
 	</p>
 	<p>
 		<label>Format:</label>
+		<span><%= movie.format %></span>
 	</p>
 	<p>
 		<label>Rating:</label>
+		<span><%= movie.rating %></span>
 	</p>
 	<p>
 		<label>Date Added:</label>
@@ -27,6 +30,10 @@
 	<p>
 		<label>Notes:</label>
 		<span><%= movie.notes %></span>
+	</p>
+	<p>
+		<label>Trailer:</label>
+		<span><%= movie.trailer ? link_to(movie.trailer,movie.trailer) : "" %></span>
 	</p>
 	<p>
 		<button type="button" id="editMovie">Edit</button>

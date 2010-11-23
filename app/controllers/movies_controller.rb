@@ -29,17 +29,39 @@ class MoviesController < ApplicationController
   end
   
   def update_many
-  
-    params[:movies].each do |movie|
-		current_user.catalogue.create_revision(
-			movie[:id] ? movie[:id] : nil,
-			movie[:data]
-		)
-    end
-    
-    respond_to do |format|
-      format.json { render :json => { :result => "true" } }
-    end
+	begin
+		#rescue ActiveRecord::StatementInvalid
+		#ActiveRecord::RecordInvalid
+		Movie.transaction do
+			params[:movies].each do |m|
+				data = m[:data]
+				#gotta change genre name to id
+				if(data.has_key?("genres"))
+					ids = Genre.get_ids(data[:genres])
+					data.delete("genres")
+				end
+				if(m.has_key?("id"))
+					movie = @catalogue.movies.find(m[:id])
+					movie.genre_ids = ids
+					movie.changed_by = current_user
+					movie.update_attributes(data)
+				else
+					movie = @catalogue.movies.build(data)
+					movie.genre_ids = ids
+					movie.changed_by = current_user
+				end
+			@catalogue.save!
+			end
+		end
+	rescue
+		respond_to do |format|
+			format.json { render :json => { :result => "false", :reason => $!.to_s } }
+		end
+		return
+	end
+	respond_to do |format|
+		format.json { render :json => { :result => "true" } }
+	end
   
   end
   
@@ -84,8 +106,16 @@ class MoviesController < ApplicationController
   # POST /movies
   # POST /movies.xml
   def create
-    @movie = @catalogue.movies.build(params[:movie])
+	data = params[:movie]
+    if(data.has_key?("genres"))
+		ids = Genre.get_ids(data[:genres])
+		data.delete("genres")
+	end
+    @movie = @catalogue.movies.build(data)
     @movie.changed_by = current_user
+    unless ids == nil
+		@movie.genre_ids = ids
+    end
 
     respond_to do |format|
       if @movie.save
@@ -122,7 +152,7 @@ class MoviesController < ApplicationController
   # DELETE /movies/1
   # DELETE /movies/1.xml
   def destroy
-    @movie = Movie.find(params[:id])
+    @movie = @catalogue.movies.find(params[:id])
     @movie.destroy
 
     respond_to do |format|

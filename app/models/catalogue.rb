@@ -1,10 +1,10 @@
 class Catalogue < ActiveRecord::Base
-  has_many :movies
+  has_many :movies, :dependent => :destroy
   has_many :users
-  has_many :revisions
+  has_many :revisions, :dependent => :nullify
   
   def all_movies
-    return movie_holders.collect { |m| m.movie }
+    return movies
   end
   
   def get_movies(page,limit,sidx,sord)
@@ -57,20 +57,7 @@ class Catalogue < ActiveRecord::Base
   
   def new_revisions(number)
   
-	if current_revision_number <= number
-	  return nil
-	end
-	revisions = revisions.includes(:movies => :movie_holder).where(["number > ?", number])
-	out = Array.new(revisions.length)
-	revisions.each_with_index { |r, i| out[i] = r.to_hash }
-	return out
-  
-  end
-  
-  def current_revision_number
-  
-    number = revisions.maximum("number");
-    return number ? number : 1;
+    return revisions.where(["id > ?", number])
   
   end
   

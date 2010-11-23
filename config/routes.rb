@@ -11,6 +11,9 @@ Site::Application.routes.draw do
   resources :users
   
   resources :catalogues do
+    member do
+		get 'new_revisions'
+    end
 	resources :movies do
 		collection do
 			get 'grid'

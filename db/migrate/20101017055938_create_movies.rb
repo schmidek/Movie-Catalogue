@@ -8,6 +8,7 @@ class CreateMovies < ActiveRecord::Migration
       t.integer :year
       t.date :added
       t.integer :rating
+      t.string :format, :default => "Bluray"
       t.text :summary
       t.text :notes
       t.integer :catalogue_id

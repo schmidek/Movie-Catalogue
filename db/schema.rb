@@ -10,11 +10,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101022193500) do
+ActiveRecord::Schema.define(:version => 20101119035824) do
 
   create_table "catalogues", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "genres", :force => true do |t|
+    t.string "name"
+  end
+
+  create_table "genres_movies", :id => false, :force => true do |t|
+    t.integer "movie_id"
+    t.integer "genre_id"
   end
 
   create_table "movie_holders", :force => true do |t|
@@ -32,10 +41,11 @@ ActiveRecord::Schema.define(:version => 20101022193500) do
     t.integer  "year"
     t.date     "added"
     t.integer  "rating"
+    t.string   "format",       :default => "Bluray"
     t.text     "summary"
     t.text     "notes"
     t.integer  "catalogue_id"
-    t.boolean  "active",       :default => true, :null => false
+    t.boolean  "active",       :default => true,     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -60,7 +70,6 @@ ActiveRecord::Schema.define(:version => 20101022193500) do
     t.string   "perishable_token"
     t.integer  "login_count"
     t.integer  "failed_login_count"
-    t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.datetime "last_login_at"
     t.string   "current_login_ip"

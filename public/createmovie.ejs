@@ -1,0 +1,47 @@
+<div id="leftItemView">
+  <%= form_tag('movies', {id: "movieForm"}) %>
+	<p>
+		<label for="name">Name:</label>
+		<%= input_field_tag('movie[name]', movie.name) %>
+	</p>
+	<p>
+		<label for="year">Year Released:</label>
+		<%= input_field_tag('movie[year]', movie.year) %>
+	</p>
+	<p>
+		<label>Genre:</label>
+		<% for(var i in movie.genres ){ %>
+			<%= input_field_tag('movie[genres][]', movie.genres[i]) %>
+		<% } %>
+	</p>
+	<p>
+		<label>Format:</label>
+	</p>
+	<p>
+		<label>Rating:</label>
+	</p>
+	<p>
+		<label for="added">Date Added:</label>
+		<%= input_field_tag('movie[added]', movie.added) %>
+	</p>
+	<p>
+		<label for="summary">Summary:</label>
+		<%= text_area_tag('movie[summary]', movie.summary) %>
+	</p>
+	<p>
+		<label for="notes">Notes:</label>
+		<%= text_area_tag('movie[notes]', movie.notes) %>
+	</p>
+	<p>
+		<input type="submit" val="Create" />
+		<button type="button" id="cancel">Cancel</button>
+		<%= hidden_field_tag('movie[cover]', movie.cover) %>
+		<%= hidden_field_tag('movie[trailer]', movie.trailer) %>
+		<%= hidden_field_tag('movie[imdb]', movie.imdb) %>
+	</p>
+  </form>
+</div>
+
+<div id="rightItemView">
+	<%= img_tag(movie.cover, 'No Image') %>
+</div>

@@ -80,4 +80,13 @@ class CataloguesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+   # GET /catalogues/1/new_revisions
+  def new_revisions
+	@catalogue = Catalogue.find(params[:id])
+	@revisions = @catalogue.new_revisions(params[:number])
+	
+	render :json => @revisions
+  end
+  
 end
