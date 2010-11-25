@@ -1,5 +1,25 @@
+#nav li {
+	list-style-type:none;display:inline;margin-right: -0.1em;
+}
+
+#nav {
+	padding:0;margin:0;
+}
+
+#header {
+	padding: 2% 5%;
+}
+
+#topsearch {
+	float: right;margin:0;padding:0;
+}
+
+.ui-button-text {
+	color: #FFF;
+}
+
 #leftdiv {
-	float:left;
+	float: left;
 	width:50%;
 }
 
@@ -9,7 +29,7 @@
 }
 
 #listview {
-	width: 95%;
+	width: 98%;
 	margin-left: auto ;
     margin-right: auto ;
 }
@@ -17,18 +37,37 @@
 #itemview {
 	margin-left: auto ;
     margin-right: auto ;
+    overflow: hidden;
+    padding-top:0;
 }
 
 #leftItemView {
-	float:left;
-	width:70%;
+	
 }
 
 #rightItemView {
 	float:right;
-	width:30%;
+	width:200px;
 }
 
 label {
 	font-weight: bold;
+}
+
+#jqgh_name,#jqgh_year,#jqgh_added { font-size:1.4em }
+
+.logo {
+	font-size: 3em;
+}
+
+.movie-title {
+	padding:5px;margin:2px;
+}
+
+.movie-content{
+	margin:10px;
+}
+
+#content {
+	
 }

@@ -1,5 +1,8 @@
-<div id="leftItemView">
+<div id="leftItemView" class="movie-content">
   <%= form_tag('movies/'+movie.id, {id: "movieForm"}) %>
+	<div id="rightItemView">
+		<%= img_tag(movie.cover, 'No Image') %>
+	</div>
 	<p>
 		<label for="name">Name:</label>
 		<%= input_field_tag('movie[name]', movie.name) %>
@@ -34,8 +37,4 @@
 		<button type="button" id="cancel">Cancel</button>
 	</p>
   </form>
-</div>
-
-<div id="rightItemView">
-	<%= img_tag(movie.cover, 'No Image') %>
 </div>

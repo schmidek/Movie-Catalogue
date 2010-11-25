@@ -155,6 +155,7 @@ var ItemView = function($div){
 	
 	self.updateCurrent = function(movie){
 		div.html(showTemplate.render({ movie: movie }));
+		div.find("button").button();
 		$("#editMovie").click(function(){
 			self.editCurrent(movie);
 		});
@@ -162,6 +163,7 @@ var ItemView = function($div){
 	
 	self.editCurrent = function(movie){
 		div.html(editTemplate.render({ movie: movie }));
+		div.find("button,input[type=submit]").button();
 		$("#cancel").click(function(){
 			self.updateCurrent(movie);
 		});
@@ -181,6 +183,7 @@ var ItemView = function($div){
 	
 	self.pendingCreate = function(movie){
 		div.html(createTemplate.render({ movie: movie }));
+		div.find("button,input[type=submit]").button();
 		$("#cancel").click(function(){
 			self.updateCurrent(movie);
 		});

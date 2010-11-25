@@ -1,8 +1,8 @@
-<div id="leftItemView">
-	<p>
-		<label>Name:</label>
-		<span><%= movie.name %></span>
-	</p>
+<h2 class="ui-widget-header movie-title ui-corner-all"><%= movie.name %></h2>
+<div id="leftItemView" class="movie-content">
+	<div id="rightItemView">
+		<%= img_tag(movie.cover) %>
+	</div>
 	<p>
 		<label>Year Released:</label>
 		<span><%= movie.year %></span>
@@ -38,8 +38,4 @@
 	<p>
 		<button type="button" id="editMovie">Edit</button>
 	</p>
-</div>
-
-<div id="rightItemView">
-	<%= img_tag(movie.cover) %>
 </div>
