@@ -13,6 +13,7 @@ Site::Application.routes.draw do
   resources :catalogues do
     member do
 		get 'new_revisions'
+		get 'changes'
     end
 	resources :movies do
 		collection do

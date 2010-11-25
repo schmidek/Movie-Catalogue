@@ -81,6 +81,15 @@ class CataloguesController < ApplicationController
     end
   end
   
+  def changes
+	@catalogue = Catalogue.find(params[:id])
+	
+	respond_to do |format|
+      format.html # new.html.erb
+      format.json  { render :json => @catalogue.get_revisions(params[:page].to_i,params[:rows].to_i,params[:sidx],params[:sord]) }
+    end
+  end
+  
    # GET /catalogues/1/new_revisions
   def new_revisions
 	@catalogue = Catalogue.find(params[:id])

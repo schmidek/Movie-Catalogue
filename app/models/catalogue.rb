@@ -37,6 +37,25 @@ class Catalogue < ActiveRecord::Base
     }
   end
   
+  def get_revisions(page,limit,sidx,sord)
+	offset = limit * (page -1)
+	page_revisions = revisions.limit(limit)
+						.offset(offset)
+						.order(sidx + " " + sord)
+						.includes(:movie, :user)
+	count = revisions.count
+	
+	total_pages = (count.to_f/limit.to_f).ceil
+    rows = Array.new(page_revisions.length)
+    page_revisions.each_with_index { |r, i| rows[i] = {"id" => r.id, "cell" => [r.change_type,r.movie.name,r.diff,r.user.login,r.created_at.strftime("%b %d, %Y at %I:%M%p")] } }
+    return {
+		'records' => count,
+		'page' => page,
+		'total' => total_pages,
+		'rows' => rows
+    }
+  end
+  
   def create_revision(movie_holder, data)
     revision = revisions.build(:catalogue_id => self.id, :number => current_revision_number+1)
     movie = revision.movies.build(data)
