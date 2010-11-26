@@ -39,6 +39,7 @@
     margin-right: auto ;
     overflow: hidden;
     padding-top:0;
+    min-height:200px;
 }
 
 #leftItemView {
@@ -61,7 +62,7 @@ label {
 }
 
 .movie-title {
-	padding:5px;margin:2px;
+	padding:5px;margin:2px;padding-left:10px;
 }
 
 .movie-content{
