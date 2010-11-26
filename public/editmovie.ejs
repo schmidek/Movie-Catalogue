@@ -16,6 +16,10 @@
 	</p>
 	<p>
 		<label>Format:</label>
+		<span id="formatset">
+			<input type="radio" id="format_bluray" name="movie[format]" value="Bluray" <%= movie.format == 'Bluray' ? 'checked="checked"' : '' %> /><label for="format_bluray">Bluray</label>
+			<input type="radio" id="format_dvd" name="movie[format]" value="DVD" <%= movie.format == 'DVD' ? 'checked="checked"' : '' %> /><label for="format_dvd">DVD</label>
+		</span>
 	</p>
 	<p>
 		<label>Rating:</label>

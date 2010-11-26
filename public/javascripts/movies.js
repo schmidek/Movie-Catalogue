@@ -113,7 +113,7 @@ var ListView = function(){
 	   	pager: '#movienav',
 	   	sortname: 'added',
 	    viewrecords: true,
-	    sortorder: "asc",
+	    sortorder: "desc",
 	    //scroll:1,
 		caption: "Movies",
 		height: '100%',
@@ -164,6 +164,7 @@ var ItemView = function($div){
 	self.editCurrent = function(movie){
 		div.html(editTemplate.render({ movie: movie }));
 		div.find("button,input[type=submit]").button();
+		$("#formatset",div).buttonset();
 		$("#cancel").click(function(){
 			self.updateCurrent(movie);
 		});
@@ -184,6 +185,7 @@ var ItemView = function($div){
 	self.pendingCreate = function(movie){
 		div.html(createTemplate.render({ movie: movie }));
 		div.find("button,input[type=submit]").button();
+		$("#formatset",div).buttonset();
 		$("#cancel").click(function(){
 			self.updateCurrent(movie);
 		});
