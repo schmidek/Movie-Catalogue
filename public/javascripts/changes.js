@@ -11,11 +11,11 @@ jQuery("#changes-table").jqGrid({
    		{name:'created_at',index:'created_at',width:200}
    	],
    	rowNum:10,
-   	rownumbers: true,
+   	//rownumbers: true,
    	pager: '#changes-div',
    	sortname: 'created_at',
     viewrecords: true,
-    sortorder: "asc",
+    sortorder: "desc",
     //scroll:1,
 	caption: "Changes",
 	height: '100%',

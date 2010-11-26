@@ -47,7 +47,7 @@ class Catalogue < ActiveRecord::Base
 	
 	total_pages = (count.to_f/limit.to_f).ceil
     rows = Array.new(page_revisions.length)
-    page_revisions.each_with_index { |r, i| rows[i] = {"id" => r.id, "cell" => [r.change_type,r.movie.name,r.diff,r.user.login,r.created_at.strftime("%b %d, %Y at %I:%M%p")] } }
+    page_revisions.each_with_index { |r, i| rows[i] = {"id" => r.id, "cell" => [r.change_type,r.movie.name,r.format_diff(:html),r.user.login,r.created_at.strftime("%b %d, %Y at %I:%M%p")] } }
     return {
 		'records' => count,
 		'page' => page,

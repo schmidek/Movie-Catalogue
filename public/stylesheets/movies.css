@@ -69,6 +69,18 @@ label {
 	margin:10px;
 }
 
-#content {
-	
+ins.differ{
+	text-decoration: none;
+	background-color:#006600;
+}
+del.differ{
+	text-decoration: none;
+	background-color:#580000;
+}
+
+.ui-jqgrid tr.jqgrow td {
+  white-space: normal !important;
+  height:auto;
+  vertical-align:text-top;
+  padding-top:2px;
 }

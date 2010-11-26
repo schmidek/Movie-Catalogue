@@ -24,23 +24,30 @@ class Movie < ActiveRecord::Base
 	save
   end
 
-  def diff(b)
+  def diff
     diff = {}
-	self.attributes.each do |key, value|
-		bvalue = b[key]
-		unless value == bvalue or bvalue == nil
-			diff[key] = [value,bvalue]
-		end
+	self.changes.each do |key, value|
+		a = value[0].to_s || ''
+		b = value[1].to_s || ''
+		#find shortest diff method
+		diff1 = Differ.diff_by_char(b,a).format_as(:array)
+		diff2 = Differ.diff_by_word(b,a).format_as(:array)
+		diff3 = Differ.diff_by_line(b,a).format_as(:array)
+		d = [diff1, diff2, diff3].min { |d1,d2| d1.to_json.length <=> d2.to_json.length }
+		
+		diff[key] = d
 	end
 	return diff
   end
   
+  #TODO fix for new diff
   def patch(diff)
 	diff.each do |key, value|
 		self[key] = value[1]
 	end
   end
   
+  #TODO fix for new diff
   def unpatch(diff)
 	diff.each do |key, value|
 		self[key] = value[0]
@@ -53,7 +60,7 @@ class Movie < ActiveRecord::Base
   
   private
   def make_change
-	revision = revisions.build(:diff => self.changes.to_json,
+	revision = revisions.build(:diff => diff.to_json,
 					 :change_type => "update",
 					 :catalogue_id => self.catalogue_id)
 	revision.user = @changed_by
