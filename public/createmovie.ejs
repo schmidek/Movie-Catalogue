@@ -1,7 +1,7 @@
 <div id="leftItemView" class="movie-content">
   <%= form_tag('movies', {id: "movieForm"}) %>
 	<div id="rightItemView">
-		<%= img_tag(movie.cover, 'No Image') %>
+		<%= movie.cover ? img_tag(movie.cover,'No Image') : '' %>
 	</div>
 	<p>
 		<label for="name">Name:</label>
@@ -26,6 +26,7 @@
 	</p>
 	<p>
 		<label>Rating:</label>
+		<span id="rating"></span>
 	</p>
 	<p>
 		<label for="added">Date Added:</label>

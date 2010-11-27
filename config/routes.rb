@@ -26,6 +26,7 @@ Site::Application.routes.draw do
 
   root :to => "user_sessions#new"
   match "logout" => "user_sessions#destroy"
+  match "login" => "user_sessions#new"
 
 
   # The priority is based upon order of creation:

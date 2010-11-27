@@ -1,7 +1,7 @@
 <h2 class="ui-widget-header movie-title ui-corner-all"><%= movie.name %></h2>
 <div id="leftItemView" class="movie-content">
 	<div id="rightItemView">
-		<%= img_tag(movie.cover) %>
+		<%= movie.cover ? img_tag(movie.cover,'No Image') : '' %>
 	</div>
 	<p>
 		<label>Year Released:</label>
@@ -17,7 +17,7 @@
 	</p>
 	<p>
 		<label>Rating:</label>
-		<span><%= movie.rating %></span>
+		<span id="rating"></span>
 	</p>
 	<p>
 		<label>Date Added:</label>

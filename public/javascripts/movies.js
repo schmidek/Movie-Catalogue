@@ -156,6 +156,7 @@ var ItemView = function($div){
 	self.updateCurrent = function(movie){
 		div.html(showTemplate.render({ movie: movie }));
 		div.find("button").button();
+		$("#rating").raty({ readOnly: true, start: movie.rating, number:10, path: '/images/' });
 		$("#editMovie").click(function(){
 			self.editCurrent(movie);
 		});
@@ -164,6 +165,7 @@ var ItemView = function($div){
 	self.editCurrent = function(movie){
 		div.html(editTemplate.render({ movie: movie }));
 		div.find("button,input[type=submit]").button();
+		$("#rating").raty({ start: movie.rating, number:10, path: '/images/', name: 'rating' });
 		$("#formatset",div).buttonset();
 		$("#cancel").click(function(){
 			self.updateCurrent(movie);
@@ -185,6 +187,7 @@ var ItemView = function($div){
 	self.pendingCreate = function(movie){
 		div.html(createTemplate.render({ movie: movie }));
 		div.find("button,input[type=submit]").button();
+		$("#rating").raty({ number:10, path: '/images/', name: 'rating' });
 		$("#formatset",div).buttonset();
 		$("#cancel").click(function(){
 			self.updateCurrent(movie);
