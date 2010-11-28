@@ -120,6 +120,9 @@ var ListView = function(){
 		//autowidth: true,
 		onSelectRow: function(id){
 			self.handleClick(id);
+		},
+		loadComplete: function(){
+			$("#moviegrid").find("tbody tr:nth-child(2)").click();
 		}
 	})
 	.jqGrid('navGrid','#movienav',{edit:false,del:false,addtext:"Add Movie",addfunc:function(){ $(document).trigger('ADD_MOVIE'); } })
@@ -165,7 +168,7 @@ var ItemView = function($div){
 	self.editCurrent = function(movie){
 		div.html(editTemplate.render({ movie: movie }));
 		div.find("button,input[type=submit]").button();
-		$("#rating").raty({ start: movie.rating, number:10, path: '/images/', name: 'rating' });
+		$("#rating").raty({ start: movie.rating, number:10, path: '/images/', scoreName: 'movie[rating]', showCancel: true });
 		$("#formatset",div).buttonset();
 		$("#cancel").click(function(){
 			self.updateCurrent(movie);
@@ -187,7 +190,7 @@ var ItemView = function($div){
 	self.pendingCreate = function(movie){
 		div.html(createTemplate.render({ movie: movie }));
 		div.find("button,input[type=submit]").button();
-		$("#rating").raty({ number:10, path: '/images/', name: 'rating' });
+		$("#rating").raty({ number:10, path: '/images/', scoreName: 'movie[rating]' });
 		$("#formatset",div).buttonset();
 		$("#cancel").click(function(){
 			self.updateCurrent(movie);
@@ -224,15 +227,13 @@ var Controller = function(){
 	};
 	
 	$(document).bind('MOVIE_UPDATED',function(e,id){
-		$("#moviegrid").trigger("reloadGrid"); 
+		//$("#moviegrid").trigger("reloadGrid"); 
 		$(document).trigger('INVALIDATE_CACHE',id);
 		self.updateSelected(id);
 	});
 	
 	$(document).bind('NEW_MOVIE',function(e){
 		$("#moviegrid").trigger("reloadGrid"); 
-		//TODO get id of new movie
-		self.updateSelected(1);
 	});
 	
 };

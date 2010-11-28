@@ -28,12 +28,16 @@
 		<span><%= movie.summary %></span>
 	</p>
 	<p>
+		<% if(movie.notes){ %>
 		<label>Notes:</label>
 		<span><%= movie.notes %></span>
+		<% } %>
 	</p>
 	<p>
+		<% if(movie.trailer){ %>
 		<label>Trailer:</label>
 		<span><%= movie.trailer ? link_to(movie.trailer,movie.trailer) : "" %></span>
+		<% } %>
 	</p>
 	<p>
 		<button type="button" id="editMovie">Edit</button>

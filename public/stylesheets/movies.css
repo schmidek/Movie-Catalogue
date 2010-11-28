@@ -73,10 +73,14 @@ label {
 ins.differ{
 	text-decoration: none;
 	background-color:#006600;
+	padding-left: 0.3em;
+	padding-right: 0.3em;
 }
 del.differ{
 	text-decoration: none;
 	background-color:#580000;
+	padding-left: 0.3em;
+	padding-right: 0.3em;
 }
 
 .ui-jqgrid tr.jqgrow td {
