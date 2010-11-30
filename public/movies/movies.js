@@ -1,8 +1,8 @@
 steal.plugins(	
-	'jquery/controller',			// a widget factory
+	//'jquery/controller',			// a widget factory
 	'jquery/view/ejs',				// client side templates
 	'jquery/view/helpers',
-	'jquery/model'	,
+	//'jquery/model'	,
 	'javascripts/grid.locale-en',
 	'javascripts/jquery.jqGrid.min',
 	'javascripts/jquery.raty.min'

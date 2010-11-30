@@ -1,5 +1,4 @@
 steal.plugins(	
-	'jquery',
 	'javascripts/grid.locale-en',
 	'javascripts/jquery.jqGrid.min'
 )

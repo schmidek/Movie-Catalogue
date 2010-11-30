@@ -1,3 +1,4 @@
+$(document).ready(function(){
 //initialize grid
 jQuery("#changes-table").jqGrid({        
    	url:'changes.json',
@@ -27,3 +28,4 @@ jQuery("#changes-table").jqGrid({
 .jqGrid('navGrid','#changes-div',{edit:false,del:false,add:false})
 .filterToolbar();
 $('.ui-jqgrid-titlebar').hide();
+});
