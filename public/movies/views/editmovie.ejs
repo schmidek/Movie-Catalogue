@@ -1,0 +1,45 @@
+<div id="leftItemView" class="movie-content">
+  <%= form_tag('movies/'+movie.id, {id: "movieForm"}) %>
+	<div id="rightItemView">
+		<%= movie.cover ? img_tag(movie.cover) : '' %>
+	</div>
+	<p>
+		<label for="name">Name:</label>
+		<%= input_field_tag('movie[name]', movie.name) %>
+	</p>
+	<p>
+		<label for="year">Year Released:</label>
+		<%= input_field_tag('movie[year]', movie.year) %>
+	</p>
+	<p>
+		<label>Genre:</label>
+	</p>
+	<p>
+		<label>Format:</label>
+		<span id="formatset">
+			<input type="radio" id="format_bluray" name="movie[format]" value="Bluray" <%= movie.format == 'Bluray' ? 'checked="checked"' : '' %> /><label for="format_bluray">Bluray</label>
+			<input type="radio" id="format_dvd" name="movie[format]" value="DVD" <%= movie.format == 'DVD' ? 'checked="checked"' : '' %> /><label for="format_dvd">DVD</label>
+		</span>
+	</p>
+	<p>
+		<label>Rating:</label>
+		<span id="rating"></span>
+	</p>
+	<p>
+		<label for="added">Date Added:</label>
+		<%= input_field_tag('movie[added]', movie.added) %>
+	</p>
+	<p>
+		<label for="summary">Summary:</label>
+		<%= text_area_tag('movie[summary]', movie.summary) %>
+	</p>
+	<p>
+		<label for="notes">Notes:</label>
+		<%= text_area_tag('movie[notes]', movie.notes) %>
+	</p>
+	<p>
+		<input type="submit" />
+		<button type="button" id="cancel">Cancel</button>
+	</p>
+  </form>
+</div>

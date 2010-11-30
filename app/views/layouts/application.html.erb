@@ -4,8 +4,9 @@
   <title>Movies</title>
   <%= stylesheet_link_tag :all %>
   <%= stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/dark-hive/jquery-ui.css", "http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css" %>
-  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js", "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js", "http://trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js" ,"http://trirand.com/blog/jqgrid/js/jquery.jqGrid.min.js", 'movies.js', 'ejs_production.js', 'jquery.raty.min.js' %>
   <%= csrf_meta_tag %>
+  <script type="text/javascript" src="/steal/steal.js?movies"></script>
+  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js" %>
   <script type="text/javascript">
     $(document).ready(function(){
 		$("#nav").buttonset();

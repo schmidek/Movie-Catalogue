@@ -1,0 +1,5 @@
+<div id="choices">
+<% for ( var i = 0; i < movies.length; i++ ){ %>
+  <%= $.View('//movies/views/partialSelection.ejs',{ movie: movies[i] }) %>
+<% } %>
+</div>
