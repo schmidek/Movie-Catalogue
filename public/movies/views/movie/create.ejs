@@ -1,20 +1,20 @@
-<div id="leftItemView" class="movie-content">
-  <%= form_tag('movies', {id: "movieForm"}) %>
+<div class="movie-content" id="movie">
+  <form action='movies'>
 	<div id="rightItemView">
-		<%= movie.cover ? img_tag(movie.cover) : '' %>
+		<%= this.cover ? img_tag(this.cover) : '' %>
 	</div>
 	<p>
 		<label for="name">Name:</label>
-		<%= input_field_tag('movie[name]', movie.name) %>
+		<%= input_field_tag('movie[name]', this.name) %>
 	</p>
 	<p>
 		<label for="year">Year Released:</label>
-		<%= input_field_tag('movie[year]', movie.year) %>
+		<%= input_field_tag('movie[year]', this.year) %>
 	</p>
 	<p>
 		<label>Genre:</label>
-		<% for(var i in movie.genres ){ %>
-			<%= input_field_tag('movie[genres][]', movie.genres[i]) %>
+		<% for(var i in this.genres ){ %>
+			<%= input_field_tag('movie[genres][]', this.genres[i]) %>
 		<% } %>
 	</p>
 	<p>
@@ -30,22 +30,23 @@
 	</p>
 	<p>
 		<label for="added">Date Added:</label>
-		<%= input_field_tag('movie[added]', movie.added) %>
+		<%= input_field_tag('movie[added]', this.added) %>
 	</p>
 	<p>
 		<label for="summary">Summary:</label>
-		<%= text_area_tag('movie[summary]', movie.summary) %>
+		<%= text_area_tag('movie[summary]', this.summary) %>
 	</p>
 	<p>
 		<label for="notes">Notes:</label>
-		<%= text_area_tag('movie[notes]', movie.notes) %>
+		<%= text_area_tag('movie[notes]', this.notes) %>
 	</p>
 	<p>
 		<input type="submit" val="Create" />
 		<button type="button" id="cancel">Cancel</button>
-		<%= hidden_field_tag('movie[cover]', movie.cover) %>
-		<%= hidden_field_tag('movie[trailer]', movie.trailer) %>
-		<%= hidden_field_tag('movie[imdb]', movie.imdb) %>
+		<%= hidden_field_tag('movie[cover]', this.cover) %>
+		<%= hidden_field_tag('movie[trailer]', this.trailer) %>
+		<%= hidden_field_tag('movie[imdb]', this.imdb) %>
+		<input type="hidden" name="_method" value="post" />
 	</p>
   </form>
 </div>

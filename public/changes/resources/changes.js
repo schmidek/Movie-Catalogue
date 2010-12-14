@@ -48,4 +48,7 @@ $(document).ready(function() {
 		add: false
 	}).filterToolbar();
 	$('.ui-jqgrid-titlebar').hide();
+	$(window).bind('resize', function() {
+		$("#changes-table").setGridWidth($("#changes-parent").width(), true);
+	}).trigger('resize');
 });

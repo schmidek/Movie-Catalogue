@@ -1,0 +1,45 @@
+<h2 class="ui-widget-header movie-title ui-corner-all"><%= this.name %></h2>
+<div id="movie" <%= this %> class="movie-content">
+	<div id="rightItemView">
+		<%= this.cover ? img_tag(this.cover) : '' %>
+	</div>
+	<p>
+		<label>Year Released:</label>
+		<span><%= this.year %></span>
+	</p>
+	<p>
+		<label>Genre:</label>
+		<span><%= this.genres.join(", ") %></span>
+	</p>
+	<p>
+		<label>Format:</label>
+		<span><%= this.format %></span>
+	</p>
+	<p>
+		<label>Rating:</label>
+		<span id="rating"></span>
+	</p>
+	<p>
+		<label>Date Added:</label>
+		<span><%= this.added %></span>
+	</p>
+	<p>
+		<label>Summary:</label>
+		<span><%= this.summary %></span>
+	</p>
+	<p>
+		<% if(this.notes){ %>
+		<label>Notes:</label>
+		<span><%= this.notes %></span>
+		<% } %>
+	</p>
+	<p>
+		<% if(this.trailer){ %>
+		<label>Trailer:</label>
+		<span><%= this.trailer ? link_to(this.trailer,this.trailer) : "" %></span>
+		<% } %>
+	</p>
+	<p>
+		<button type="button" id="editMovie" class="edit">Edit</button>
+	</p>
+</div>

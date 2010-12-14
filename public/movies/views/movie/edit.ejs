@@ -1,0 +1,46 @@
+<div class="movie-content">
+  <form action='movies/<%= this.id %>' id="movie" <%= this %> >
+	<div id="rightItemView">
+		<%= this.cover ? img_tag(this.cover) : '' %>
+	</div>
+	<p>
+		<label for="name">Name:</label>
+		<%= input_field_tag('movie[name]', this.name) %>
+	</p>
+	<p>
+		<label for="year">Year Released:</label>
+		<%= input_field_tag('movie[year]', this.year) %>
+	</p>
+	<p>
+		<label>Genre:</label>
+	</p>
+	<p>
+		<label>Format:</label>
+		<span id="formatset">
+			<input type="radio" id="format_bluray" name="movie[format]" value="Bluray" <%= this.format == 'Bluray' ? 'checked="checked"' : '' %> /><label for="format_bluray">Bluray</label>
+			<input type="radio" id="format_dvd" name="movie[format]" value="DVD" <%= this.format == 'DVD' ? 'checked="checked"' : '' %> /><label for="format_dvd">DVD</label>
+		</span>
+	</p>
+	<p>
+		<label>Rating:</label>
+		<span id="rating"></span>
+	</p>
+	<p>
+		<label for="added">Date Added:</label>
+		<%= input_field_tag('movie[added]', this.added) %>
+	</p>
+	<p>
+		<label for="summary">Summary:</label>
+		<%= text_area_tag('movie[summary]', this.summary) %>
+	</p>
+	<p>
+		<label for="notes">Notes:</label>
+		<%= text_area_tag('movie[notes]', this.notes) %>
+	</p>
+	<p>
+		<button type="button" class="update">Update</button>
+		<button type="button" class="cancel">Cancel</button>
+		<input type="hidden" name="_method" value="put" />
+	</p>
+  </form>
+</div>
