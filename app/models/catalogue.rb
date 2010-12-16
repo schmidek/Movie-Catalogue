@@ -20,9 +20,8 @@ class Catalogue < ActiveRecord::Base
 #         .where('movie_holders.catalogue_id' => self.id)
 #         .count
      
-    page_movies = movies.limit(limit)
-                  .offset(offset)
-		          .order(sidx + " " + sord)
+    page_movies = movies.limit(limit).offset(offset).order(sidx + " " + 
+sord)
 	count = movies.count
      
     total_pages = (count.to_f/limit.to_f).ceil
@@ -39,10 +38,8 @@ class Catalogue < ActiveRecord::Base
   
   def get_revisions(page,limit,sidx,sord)
 	offset = limit * (page -1)
-	page_revisions = revisions.limit(limit)
-						.offset(offset)
-						.order(sidx + " " + sord)
-						.includes(:movie, :user)
+	page_revisions = 
+	revisions.limit(limit).offset(offset).order(sidx + " " + sord).includes(:movie, :user)
 	count = revisions.count
 	
 	total_pages = (count.to_f/limit.to_f).ceil

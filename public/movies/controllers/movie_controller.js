@@ -249,6 +249,6 @@ $.Controller.extend('Movies.Controllers.Movie',
 				$(div).remove();
 			}
 		});
-	},
+	}
 
 });
