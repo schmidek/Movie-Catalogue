@@ -135,17 +135,27 @@ class MoviesController < ApplicationController
   def update
     @movie = @catalogue.movies.find(params[:id])
     @movie.changed_by = current_user
-    
-    respond_to do |format|
-      if @movie.update_attributes(params[:movie])
-        format.html { redirect_to(@movie, :notice => 'Movie was successfully updated.') }
-        format.xml  { head :ok }
-        format.json { render :json => {:success => true} }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @movie.errors, :status => :unprocessable_entity }
-        format.json { render :json => {:success => false, :errors => @movie.errors} }
-      end
+    data = params[:movie]
+    if(data.has_key?("genres"))
+		ids = Genre.get_ids(data[:genres])
+		data.delete("genres")
+	end
+	@movie.enable_dirty_associations do
+		unless ids == nil
+			@movie.genre_ids = ids
+	    end
+	    
+	    respond_to do |format|
+	      if @movie.update_attributes(data)
+	        format.html { redirect_to(@movie, :notice => 'Movie was successfully updated.') }
+	        format.xml  { head :ok }
+	        format.json { render :json => {:success => true} }
+	      else
+	        format.html { render :action => "edit" }
+	        format.xml  { render :xml => @movie.errors, :status => :unprocessable_entity }
+	        format.json { render :json => {:success => false, :errors => @movie.errors} }
+	      end
+	    end
     end
   end
 

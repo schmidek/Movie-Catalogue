@@ -46,40 +46,42 @@ class MovieTest < ActiveSupport::TestCase
   test "diff" do
 	a = Movie.new
 	a.name = "a"
-	b = Movie.new
-	b.name = "b"
-	diff = a.diff(b)
-	assert_equal({"name" => ["a","b"]}, diff)
+	a.save
+	a.name = "b"
+	a.enable_dirty_associations do
+	diff = a.diff
+		assert_equal({"name" => [["a","b"]]}, diff)
+	end
   end
   
   test "complex diff" do
 	a = Movie.new
 	a.name = "a"
 	a.added = "2009-10-10"
-	b = Movie.new
-	b.name = "b"
-	diff = a.diff(b)
-	assert_equal({"name" => ["a","b"]}, diff)
+	a.save
+	a.name = "b"
+	a.enable_dirty_associations do
+		diff = a.diff
+		assert_equal({"name" => [["a","b"]]}, diff)
+	end
   end
   
-  test "patch" do
+  test "genre diff" do
 	a = Movie.new
 	a.name = "a"
-	b = Movie.new
-	b.name = "b"
-	diff = a.diff(b)
-	a.patch(diff)
-	assert_equal(b.attributes, a.attributes)
-  end
-  
-  test "unpatch" do
-	a = Movie.new
-	a.name = "a"
-	b = Movie.new
-	b.name = "b"
-	diff = a.diff(b)
-	b.unpatch(diff)
-	assert_equal(a.attributes, b.attributes)
+	g1 = Genre.new
+	g1.name = "agenre1"
+	g1.save
+	a.genres << g1
+	a.save
+	g2 = Genre.new
+	g2.name = "agenre2"
+	g2.save
+	a.enable_dirty_associations do
+		a.genres << g2
+		diff = a.diff
+		assert_equal({"genres" => ["agenre1", [nil, " agenre2"]]}, diff)
+	end
   end
   
 end

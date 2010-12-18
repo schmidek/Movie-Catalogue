@@ -26,7 +26,7 @@ sord)
      
     total_pages = (count.to_f/limit.to_f).ceil
     rows = Array.new(page_movies.length)
-    page_movies.each_with_index { |m, i| rows[i] = {"id" => m.id, "cell" => [m.name,m.year,m.added] } }
+    page_movies.each_with_index { |m, i| rows[i] = {"id" => m.id, "cell" => [m.name,m.year,m.added.strftime("%b %d, %Y at %I:%M%p")] } }
          
     return {
 		'records' => count,

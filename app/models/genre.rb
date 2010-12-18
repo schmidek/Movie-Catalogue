@@ -4,7 +4,7 @@ class Genre < ActiveRecord::Base
 	def self.get_ids(names)
 		dbgenres = all.to_a
 		ids = Array.new
-		names.uniq.each do |name|
+		names.uniq.sort.each do |name|
 			genre = dbgenres.find { |g| g.name == name }
 			unless genre == nil
 				ids.push genre.id

@@ -1,0 +1,107 @@
+=Dirty Associations
+
+This plugin adds dirty-attribute-like methods for your model's associations.  The usage is very similar to the dirty objects behavior in Rails, except that due to the high database-overhead of the initialization process, you have to explicitly enable this functionality.
+Once enabled, you get the following methods for specified collection associations (one-to-many, many-to-many):
+
+[collection_changed?]
+ Returns +true+ if the association collection has changed.
+[collection_added?]
+ Returns +true+ if new records have been added to the association collection.
+[collection_removed?]
+ Returns +true+ if records have been removed from the association collection.
+[collection_added]
+ Returns an array of associated objects that have been added to this collection.
+[collection_removed]
+ Returns an array of associated objects that have been removed from the collection, if they still exist.
+ This will not raise any exceptions if any objects no longer exist, it just won't return them.
+[collection_were]
+ Returns an array of the association's objects as they were at the start of association tracking.
+[collection_singular_ids_changed?]
+ Returns +true+ if the association collection has changed.
+[collection_singular_ids_added?]
+ Returns +true+ if new records have been added to the association collection.
+[collection_singular_ids_removed?]
+ Returns +true+ if records have been removed from the association collection.
+[collection_singular_ids_added]
+ Returns an array of associated objects' ids that have been added to the collection.
+[collection_singular_ids_removed]
+ Returns an array of associated objects' ids that have been removed from the collection.
+[collection_singular_ids_were]
+ Returns an array of the associated objects' ids as they were at the start of association tracking.
+
+(Note: +collection+ is replaced with name of the tracked association.)
+
+For singular associations (one-to-one), you get these methods:
+
+[association_changed?]
+  Returns +true+ when the association has changed.
+[association_added?]
+  Returns +true+ if an object was added to a previously empty association.
+[association_removed?]
+  Returns +true+ if an object was removed from the association, leaving it empty.
+[association_was]
+  Returns the original object of the association. +nil+ if it no longer exists.
+[association_id_changed?]
+   Returns +true+ if the association object has changed.
+[association_id_added?]
+  Returns +true+ if an object was added to a previously empty association.
+[association_id_removed?]
+  Returns +true+ if an object was removed from the association, leaving it empty.
+[association_id_was]
+  Returns the original association object's id.
+[association_id]
+  Returns the current association object's id.
+
+(Note: +association+ is replaced with name of the tracked association.)
+
+And all associations get the following method:
+[associations_changed?]
+  Returns +true+ if any of the tracked associations have changed.
+  
+=Installation
+
+Currently, this only exists as a plugin.  You can install it with:
+
+  script/plugin install git://github.com/daphonz/dirty_associations.git
+
+
+=Example
+
+You must specify which associations you would like to make dirty in your model:
+
+  class Task < ActiveRecord::Base
+    has_and_belongs_to_many :keywords
+    has_many :blocking_tasks
+    belongs_to :user
+    keep_track_of :keywords, :user
+  end
+
+You specify the scope in which you'll track the changes to the associations by calling <tt>enable_dirty_associations</tt> on the instantiated model object, which accepts a block.  All modifications you make to the object's associations that fall within this block statement are recorded.  This record persists throughout the block, but not outside of it:
+
+  task = Task.first
+  task.enable_dirty_associations do
+
+    task.associations_changed? # false
+    task.keyword_ids_changed?  # false
+
+    task.keywords << Keyword.first
+    task.keywords << Keyword.last
+
+    task.keyword_ids_changed?  # true
+    task.keyword_ids_removed?  # false
+    task.keyword_ids_added?    # true
+    task.keyword_ids_added     # [30,450]
+    task.keywords_added        # ...collection of keyword objects that were added...
+    task.keyword_ids_removed   # []
+    
+    task.create_user(:name => "Joey Joe Joe Jr.")
+    
+    task.user_changed?         # true
+    task.user_was              # ...original user object...
+
+  end
+
+  task.associations_changed?   # false
+
+
+Copyright (c) 2010 Casey Dreier, released under the MIT license.

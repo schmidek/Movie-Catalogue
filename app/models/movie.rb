@@ -9,6 +9,8 @@ class Movie < ActiveRecord::Base
   has_many :revisions, :dependent => :destroy, :readonly => true
   has_and_belongs_to_many :genres
   
+  keep_track_of :genres
+  
   attr_accessor :changed_by
   
   #TODO bad performance
@@ -36,6 +38,11 @@ class Movie < ActiveRecord::Base
 		d = [diff1, diff2, diff3].min { |d1,d2| d1.to_json.length <=> d2.to_json.length }
 		
 		diff[key] = d
+	end
+	if respond_to?('genre_ids_changed?') and genre_ids_changed?
+		oldgenres = genres_were.collect {|g| g.name }.sort.join(" ")
+		newgenres = genre_names.sort.join(" ")
+		diff["genres"] = Differ.diff_by_word(newgenres,oldgenres).format_as(:array)
 	end
 	return diff
   end

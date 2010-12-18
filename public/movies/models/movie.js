@@ -47,7 +47,8 @@ $.Model.extend('Movies.Models.Movie',
 			success: function(){
 				//INVALIDATE Cache
 				delete self.cache[id];
-				success();
+				self.publish("updated");
+				if(success){ success(); }
 			},
 			error: error
 		});

@@ -13,6 +13,15 @@
 	</p>
 	<p>
 		<label>Genre:</label>
+		<select id="genres_multiselect" name='movie[genres][]' multiple="multiple">
+		<% 
+		var gs = Movies.Models.Genre.findAll()
+		for(var i in gs){ 
+		  var g = gs[i];
+		%>
+			<option value="<%= g %>" <%= $.inArray(g,this.genres)>-1 ? 'selected="selected"' : '' %>><%= g %></option>
+		<% } %>
+		</select>
 	</p>
 	<p>
 		<label>Format:</label>

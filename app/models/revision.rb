@@ -12,7 +12,7 @@ class Revision < ActiveRecord::Base
 			hash.each do |key,value|
 				str += '<b>' + key.capitalize + '</b>: '
 				str += Differ.parse(:array,value).format_as(format)
-				str += ' '
+				str += '<br />'
 			end
 		end
 		return str

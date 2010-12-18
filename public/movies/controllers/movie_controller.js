@@ -38,7 +38,7 @@ $.Controller.extend('Movies.Controllers.Movie',
 			{
 				name: 'added',
 				index: 'added',
-				width: 100
+				width: 200
 			}],
 			rowNum: 20,
 			rownumbers: true,
@@ -120,6 +120,12 @@ $.Controller.extend('Movies.Controllers.Movie',
 			showCancel: true
 		});
 		$("#formatset", div).buttonset();
+		$("#genres_multiselect", div).multiselect(
+			{
+				header: false,
+				selectedList: 4
+			}
+		);
 	},
 	/**
 	 * Removes the edit interface.
@@ -133,7 +139,8 @@ $.Controller.extend('Movies.Controllers.Movie',
 	 */
 	'.update click': function( el ) {
 		var $movie = el.closest('.movie');
-		$movie.model().update($movie.formParams());
+		Movies.Models.Movie.update($movie.model().id,$movie.serialize());
+		//$movie.model().update($movie.formParams());
 	},
 	/**
 	 * Listens for updated movies.	 When a movie is updated, 
@@ -156,6 +163,16 @@ $.Controller.extend('Movies.Controllers.Movie',
 			showCancel: true
 		});
 		$("#formatset", div).buttonset();
+		$("#genres_multiselect", div).multiselect(
+			{
+				header: false,
+				selectedList: 4
+			}
+		);
+	},
+	
+	'.cancelcreate click': function(){
+		$("#moviegrid").trigger("reloadGrid");
 	},
 
 	/**
