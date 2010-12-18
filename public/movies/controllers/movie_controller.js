@@ -140,7 +140,6 @@ $.Controller.extend('Movies.Controllers.Movie',
 	'.update click': function( el ) {
 		var $movie = el.closest('.movie');
 		Movies.Models.Movie.update($movie.model().id,$movie.serialize());
-		//$movie.model().update($movie.formParams());
 	},
 	/**
 	 * Listens for updated movies.	 When a movie is updated, 
@@ -148,7 +147,6 @@ $.Controller.extend('Movies.Controllers.Movie',
 	 */
 	'movie.updated subscribe': function( called, movie ) {
 		$("#moviegrid").trigger("reloadGrid");
-		//this.show(movie);
 	},
 
 	create: function( movie ) {

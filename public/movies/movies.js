@@ -6,8 +6,7 @@ steal.plugins('jquery/controller',
 'javascripts/grid.locale-en', 
 'javascripts/jquery.jqGrid.min', 
 'javascripts/jquery.raty.min', 
-'javascripts/jquery.multiselect.min',
-'jquery/dom/form_params')
+'javascripts/jquery.multiselect.min')
 
 .css('jquery.multiselect')
 .models('movie','genre')
