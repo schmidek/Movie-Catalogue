@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_filter :set_current_user
   protect_from_forgery
   helper :all
   helper_method :current_user_session, :current_user
@@ -28,7 +29,7 @@ class ApplicationController < ActionController::Base
       if current_user
         store_location
         flash[:notice] = "You must be logged out to access this page"
-        redirect_to account_url
+        redirect_to edit_user_path
         return false
       end
     end
@@ -41,4 +42,18 @@ class ApplicationController < ActionController::Base
       redirect_to(session[:return_to] || default)
       session[:return_to] = nil
     end
+    
+    protected
+	def set_current_user
+		Authorization.current_user = current_user
+	end
+	
+	def permission_denied
+		flash[:error] = "Sorry, you are not allowed to access that page."
+		respond_to do |format|
+			format.html  { redirect_to logout_url }
+			format.json  { render :json => { :result => "false" }}
+		end
+		return
+	end
 end

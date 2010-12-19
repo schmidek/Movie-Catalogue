@@ -2,6 +2,8 @@ require 'test_helper'
 
 class MovieTest < ActiveSupport::TestCase
 
+  setup :initialize_user
+
   test "can't save movie without a name" do
     movie = Movie.new
     assert !movie.save, "Saved the movie without a title"
@@ -32,7 +34,6 @@ class MovieTest < ActiveSupport::TestCase
   
   test "changes" do
 	a = Movie.new
-	a.changed_by = User.new
 	a.name = "a"
 	assert a.save, "Save must be successful"
 	b = Movie.find_by_name("a")
@@ -82,6 +83,12 @@ class MovieTest < ActiveSupport::TestCase
 		diff = a.diff
 		assert_equal({"genres" => ["agenre1", [nil, " agenre2"]]}, diff)
 	end
+  end
+  
+  private
+  
+  def initialize_user
+	Authorization.current_user = User.first
   end
   
 end

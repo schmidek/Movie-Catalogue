@@ -1,0 +1,6 @@
+admin:
+    id: 1
+    title: admin
+write:
+    id: 2
+    title: write

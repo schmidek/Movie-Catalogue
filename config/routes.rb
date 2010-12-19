@@ -14,15 +14,15 @@ Site::Application.routes.draw do
     member do
 		get 'new_revisions'
 		get 'changes'
+		get 'grid'
     end
 	resources :movies do
 		collection do
-			get 'grid'
 			post 'update_many'
 		end
 	end
   end
-  resource :account, :controller => "users"
+  #match :account, :controller => "users"
 
   root :to => "user_sessions#new"
   match "logout" => "user_sessions#destroy"

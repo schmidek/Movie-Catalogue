@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101119035824) do
+ActiveRecord::Schema.define(:version => 20101219033927) do
 
   create_table "catalogues", :force => true do |t|
     t.datetime "created_at"
@@ -34,20 +34,18 @@ ActiveRecord::Schema.define(:version => 20101119035824) do
   end
 
   create_table "movies", :force => true do |t|
-    t.string   "name"
+    t.string   "name",                               :null => false
     t.string   "cover"
     t.string   "trailer"
     t.string   "imdb"
     t.integer  "year"
-    t.date     "added"
+    t.datetime "added"
     t.integer  "rating"
     t.string   "format",       :default => "Bluray"
     t.text     "summary"
     t.text     "notes"
     t.integer  "catalogue_id"
     t.boolean  "active",       :default => true,     :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "revisions", :force => true do |t|
@@ -58,6 +56,15 @@ ActiveRecord::Schema.define(:version => 20101119035824) do
     t.integer  "catalogue_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "roles", :force => true do |t|
+    t.string "title"
+  end
+
+  create_table "roles_users", :id => false, :force => true do |t|
+    t.integer "role_id"
+    t.integer "user_id"
   end
 
   create_table "users", :force => true do |t|

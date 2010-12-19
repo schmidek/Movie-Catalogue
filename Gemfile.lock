@@ -33,6 +33,7 @@ GEM
     authlogic (2.1.6)
       activesupport
     builder (2.1.2)
+    declarative_authorization (0.5.1)
     differ (0.1.1)
     erubis (2.6.6)
       abstract (>= 1.0.0)
@@ -73,6 +74,7 @@ PLATFORMS
 
 DEPENDENCIES
   authlogic
+  declarative_authorization
   differ
   rails (= 3.0.0)
   sqlite3-ruby

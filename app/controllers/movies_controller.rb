@@ -1,5 +1,11 @@
 class MoviesController < ApplicationController
   before_filter :require_user, :require_catalogue
+  filter_access_to :all do
+	permitted_to!(:show, @catalogue)
+  end
+  filter_access_to :all do
+    permitted_to!(:edit, @catalogue)
+  end
   protect_from_forgery :except=>:create
   
   def require_catalogue
@@ -12,19 +18,6 @@ class MoviesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-    end
-  end
-  
-  def grid
-	page = params[:page].to_i
-	limit = params[:rows].to_i
-	sidx = params[:sidx]
-	sord = params[:sord]
-	
-	@movies = @catalogue.get_movies(page,limit,sidx,sord)
-	
-	respond_to do |format|
-      format.json { render :json => @movies }
     end
   end
   
@@ -43,12 +36,10 @@ class MoviesController < ApplicationController
 				if(m.has_key?("id"))
 					movie = @catalogue.movies.find(m[:id])
 					movie.genre_ids = ids
-					movie.changed_by = current_user
 					movie.update_attributes(data)
 				else
 					movie = @catalogue.movies.build(data)
 					movie.genre_ids = ids
-					movie.changed_by = current_user
 				end
 			@catalogue.save!
 			end
@@ -112,7 +103,6 @@ class MoviesController < ApplicationController
 		data.delete("genres")
 	end
     @movie = @catalogue.movies.build(data)
-    @movie.changed_by = current_user
     unless ids == nil
 		@movie.genre_ids = ids
     end
@@ -134,7 +124,6 @@ class MoviesController < ApplicationController
   # PUT /movies/1.xml
   def update
     @movie = @catalogue.movies.find(params[:id])
-    @movie.changed_by = current_user
     data = params[:movie]
     if(data.has_key?("genres"))
 		ids = Genre.get_ids(data[:genres])

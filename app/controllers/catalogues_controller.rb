@@ -1,4 +1,6 @@
 class CataloguesController < ApplicationController
+  before_filter :require_user
+  filter_access_to :all, :attribute_check => true
   # GET /catalogues
   # GET /catalogues.xml
   def index
@@ -66,6 +68,20 @@ class CataloguesController < ApplicationController
         format.html { render :action => "edit" }
         format.xml  { render :xml => @catalogue.errors, :status => :unprocessable_entity }
       end
+    end
+  end
+  
+  def grid
+    @catalogue = Catalogue.find(params[:id])
+	page = params[:page].to_i
+	limit = params[:rows].to_i
+	sidx = params[:sidx]
+	sord = params[:sord]
+	
+	@movies = @catalogue.get_movies(page,limit,sidx,sord)
+	
+	respond_to do |format|
+      format.json { render :json => @movies }
     end
   end
 

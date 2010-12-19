@@ -22,12 +22,17 @@
 		</a>
 		<div id="topsearch">
 			<ul id="nav">
-				<li><a href="movies">Home</a></li>
-				<li><a href="/">Account</a></li>
-				<li><a href="/catalogues/1/changes">Recent Changes</a></li>
 				<% if current_user %>
+				<li><a href="/catalogues/<%= current_user.catalogue_id %>/movies">Home</a></li>
+				<% else %>
+				<li><a href="/">Home</a></li>
+				<% end %>
+				<li><a href="/">Account</a></li>
+				<% if current_user %>
+				<li><a href="/catalogues/<%= current_user.catalogue_id %>/changes">Recent Changes</a></li>
 				<li><a href="/logout">Logout</a></li>
 				<% else %>
+				<li><a href="/">Recent Changes</a></li>
 				<li><a href="/login">Login</a></li>
 				<% end %>
 			</ul>

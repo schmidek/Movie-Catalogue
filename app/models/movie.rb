@@ -1,4 +1,5 @@
 class Movie < ActiveRecord::Base
+  using_access_control
   validates :name, :presence => true
   validates_inclusion_of :format, :in => %w(Bluray DVD)
   
@@ -11,8 +12,6 @@ class Movie < ActiveRecord::Base
   
   keep_track_of :genres
   
-  attr_accessor :changed_by
-  
   #TODO bad performance
   def as_json(options)
 	{:movie => super(options).attributes.merge(:genres => genre_names) }
@@ -21,7 +20,7 @@ class Movie < ActiveRecord::Base
   def inactivate
     revision = revisions.build(:change_type => "delete",
 					 :catalogue_id => self.catalogue_id)
-	revision.user = @changed_by
+	revision.user = Authorization.current_user
 	active = false
 	save
   end
@@ -70,13 +69,13 @@ class Movie < ActiveRecord::Base
 	revision = revisions.build(:diff => diff.to_json,
 					 :change_type => "update",
 					 :catalogue_id => self.catalogue_id)
-	revision.user = @changed_by
+	revision.user = Authorization.current_user
   end
   
   def activate
 	revision = revisions.build(:change_type => "add",
 					 :catalogue_id => self.catalogue_id)
-	revision.user = @changed_by
+	revision.user = Authorization.current_user
   end
   
 end

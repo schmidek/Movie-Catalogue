@@ -22,7 +22,7 @@ $.Controller.extend('Movies.Controllers.Movie',
 		var currentSelected = 0;
 		//initialize grid
 		jQuery("#moviegrid").jqGrid({
-			url: 'movies/grid.json',
+			url: 'grid.json',
 			datatype: "json",
 			colNames: ['Name', 'Year', 'Date Added'],
 			colModel: [{
