@@ -12,6 +12,8 @@
 
 #header {
 	padding: 2% 5%;
+	margin-bottom:4%;
+	position:relative;
 }
 
 #topsearch {
@@ -54,8 +56,28 @@ label {
 
 #jqgh_name,#jqgh_year,#jqgh_added { font-size:1.4em }
 
-.logo {
-	font-size: 3em;
+.logo img {
+	position:absolute;
+	left:0px;
+	top:0px;
+	-webkit-transition: opacity 0.25s linear;
+	-moz-transition: opacity 0.25s linear;
+	-o-transition: opacity 0.25s linear;
+	transition: opacity 0.25s linear;
+	padding-top:2%;
+	margin-left:5%;
+}
+.logo img.default {
+	opacity: 1;
+}
+.logo img.default:hover {
+	opacity: 0;
+}
+.logo img.hover {
+	opacity: 0;
+}
+.logo img.hover:hover {
+	opacity: 1;
 }
 
 .movie-title {
@@ -88,12 +110,6 @@ del.differ{
 
 #changes-parent {
 	width:90%;
-	margin-left: auto ;
-	margin-right: auto ;
-}
-
-.center_div {
-	width:500px;
 	margin-left: auto ;
 	margin-right: auto ;
 }
