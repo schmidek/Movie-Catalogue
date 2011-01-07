@@ -9,18 +9,20 @@ Site::Application.routes.draw do
     end
   end
   resources :users
-  
+
   resources :catalogues do
     member do
-		get 'new_revisions'
 		get 'changes'
 		get 'grid'
     end
 	resources :movies do
-		collection do
-			post 'update_many'
-		end
 	end
+    resources :apiv1 do
+        collection do
+            post 'update_many'
+            get 'new_revisions'
+        end
+    end
   end
 
   root :to => "users#show"

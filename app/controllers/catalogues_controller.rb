@@ -70,16 +70,16 @@ class CataloguesController < ApplicationController
       end
     end
   end
-  
+
   def grid
     @catalogue = Catalogue.find(params[:id])
 	page = params[:page].to_i
 	limit = params[:rows].to_i
 	sidx = params[:sidx]
 	sord = params[:sord]
-	
+
 	@movies = @catalogue.get_movies(page,limit,sidx,sord)
-	
+
 	respond_to do |format|
       format.json { render :json => @movies }
     end
@@ -96,22 +96,14 @@ class CataloguesController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
   def changes
 	@catalogue = Catalogue.find(params[:id])
-	
+
 	respond_to do |format|
       format.html # new.html.erb
       format.json  { render :json => @catalogue.get_revisions(params[:page].to_i,params[:rows].to_i,params[:sidx],params[:sord]) }
     end
   end
-  
-   # GET /catalogues/1/new_revisions
-  def new_revisions
-	@catalogue = Catalogue.find(params[:id])
-	@revisions = @catalogue.new_revisions(params[:number])
-	
-	render :json => @revisions
-  end
-  
+
 end

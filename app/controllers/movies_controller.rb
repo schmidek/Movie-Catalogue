@@ -7,7 +7,7 @@ class MoviesController < ApplicationController
     permitted_to!(:edit, @catalogue)
   end
   protect_from_forgery :except=>:create
-  
+
   def require_catalogue
 	@catalogue = Catalogue.find(params[:catalogue_id])
   end
@@ -20,50 +20,15 @@ class MoviesController < ApplicationController
       format.html # index.html.erb
     end
   end
-  
-  def update_many
-	begin
-		#rescue ActiveRecord::StatementInvalid
-		#ActiveRecord::RecordInvalid
-		Movie.transaction do
-			params[:movies].each do |m|
-				data = m[:data]
-				#gotta change genre name to id
-				if(data.has_key?("genres"))
-					ids = Genre.get_ids(data[:genres])
-					data.delete("genres")
-				end
-				if(m.has_key?("id"))
-					movie = @catalogue.movies.find(m[:id])
-					movie.genre_ids = ids
-					movie.update_attributes(data)
-				else
-					movie = @catalogue.movies.build(data)
-					movie.genre_ids = ids
-				end
-			@catalogue.save!
-			end
-		end
-	rescue
-		respond_to do |format|
-			format.json { render :json => { :result => "false", :reason => $!.to_s } }
-		end
-		return
-	end
-	respond_to do |format|
-		format.json { render :json => { :result => "true" } }
-	end
-  
-  end
-  
+
   def pull
-  
+
 	revisions = current_user.catalogue.new_revisions
-	
+
 	respond_to do |format|
       format.json { render :json => { :result => "true" } }
     end
-    
+
   end
 
   # GET /movies/1
@@ -133,7 +98,7 @@ class MoviesController < ApplicationController
 		unless ids == nil
 			@movie.genre_ids = ids
 	    end
-	    
+
 	    respond_to do |format|
 	      if @movie.update_attributes(data)
 	        format.html { redirect_to(@movie, :notice => 'Movie was successfully updated.') }
@@ -159,5 +124,5 @@ class MoviesController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
 end
