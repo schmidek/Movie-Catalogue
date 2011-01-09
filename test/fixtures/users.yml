@@ -2,10 +2,10 @@
 
 one:
   id: 1
-  login: MyString
+  login: test
   email: MyString
-  crypted_password: MyString
-  password_salt: MyString
+  crypted_password: ceb12d51821e845fbbc80e25d8fe4d2d77dbf94f9edcd47db9bf49b06d84d0b74b19a79512fc6d55871deecbd81d2f91d0b0544de1531d7bae574e5ab84d0354
+  password_salt: vwnLQLueKDkSeXiZmPeL
   persistence_token: MyString
   single_access_token: 0l93SHddA0cfCPXusE7
   perishable_token: MyString

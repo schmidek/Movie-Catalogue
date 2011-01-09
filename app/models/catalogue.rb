@@ -77,4 +77,8 @@ sord)
   
   end
   
+  def latest_revision
+    return revisions.maximum("id")
+  end
+  
 end

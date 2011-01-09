@@ -12,11 +12,10 @@ class Apiv1Controller < ApplicationController
   end
 
   def new_revisions
-	@catalogue = Catalogue.find(params[:id])
 	@revisions = @catalogue.new_revisions(params[:number])
 
     respond_to do |format|
-		format.json { render :json => @revisions }
+		format.json { render :json => { :number => @catalogue.latest_revision,:movies => @revisions.collect{ |r| r.movie} }}
 	end
   end
 
@@ -27,21 +26,25 @@ class Apiv1Controller < ApplicationController
 		Movie.transaction do
 			params[:movies].each do |m|
 				data = m[:data]
-				#gotta change genre name to id
+				#change genre names to ids
 				if(data.has_key?("genres"))
 					ids = Genre.get_ids(data[:genres])
 					data.delete("genres")
 				end
 				if(m.has_key?("id"))
 					movie = @catalogue.movies.find(m[:id])
-					movie.genre_ids = ids
+					if ids
+						movie.genre_ids = ids
+					end
 					movie.update_attributes(data)
 				else
 					movie = @catalogue.movies.build(data)
-					movie.genre_ids = ids
+					if ids
+						movie.genre_ids = ids
+					end
 				end
-			@catalogue.save!
 			end
+			@catalogue.save!
 		end
 	rescue
 		respond_to do |format|
