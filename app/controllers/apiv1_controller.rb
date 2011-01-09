@@ -13,9 +13,12 @@ class Apiv1Controller < ApplicationController
 
   def new_revisions
 	@revisions = @catalogue.new_revisions(params[:number])
-
+	number = @catalogue.latest_revision
+	unless number
+		number = 0
+	end
     respond_to do |format|
-		format.json { render :json => { :number => @catalogue.latest_revision,:movies => @revisions.collect{ |r| r.movie} }}
+		format.json { render :json => { :number => number,:movies => @revisions.collect{ |r| r.movie} }}
 	end
   end
 
