@@ -1,6 +1,6 @@
 class CataloguesController < ApplicationController
   before_filter :require_user
-  filter_access_to :all, :attribute_check => true
+  #filter_access_to :all, :attribute_check => true
   # GET /catalogues
   # GET /catalogues.xml
   def index

@@ -1,6 +1,6 @@
 <h1>Register</h1>
 
-<% form_for @user, :url => account_path do |f| %>
+<% form_for @user, :url => { :action => "create" } do |f| %>
   <% if @user.errors.any? %>
     <div id="errorExplanation">
       <h2>The following errors prohibited this form from being saved:</h2>
