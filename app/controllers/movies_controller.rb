@@ -1,9 +1,9 @@
 class MoviesController < ApplicationController
   before_filter :require_user, :require_catalogue
-  filter_access_to :all do
+  filter_access_to [:show,:index] do
 	permitted_to!(:show, @catalogue)
   end
-  filter_access_to :all do
+  filter_access_to [:new,:edit,:create,:update,:destroy] do
     permitted_to!(:edit, @catalogue)
   end
   protect_from_forgery :except=>:create
@@ -15,7 +15,6 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.xml
   def index
-
     respond_to do |format|
       format.html # index.html.erb
     end

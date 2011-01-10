@@ -39,7 +39,9 @@
 		<span><%= this.trailer ? link_to(this.trailer,this.trailer) : "" %></span>
 		<% } %>
 	</p>
+	<% if($("#editable").val() == "true"){ %>
 	<p>
 		<button type="button" id="editMovie" class="edit">Edit</button>
 	</p>
+	<% } %>
 </div>

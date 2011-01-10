@@ -18,6 +18,7 @@ $.Controller.extend('Movies.Controllers.Movie',
 	 * When the page loads, initialize Grid.
 	 */
 	load: function() {
+		var editable= $("#editable").val() == "true";
 		var self = this;
 		var currentSelected = 0;
 		//initialize grid
@@ -66,6 +67,7 @@ $.Controller.extend('Movies.Controllers.Movie',
 		}).jqGrid('navGrid', '#movienav', {
 			edit: false,
 			del: false,
+			add: editable,
 			addtext: "Add Movie",
 			addfunc: function() {
 				self.addDialog();
