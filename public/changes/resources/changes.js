@@ -7,7 +7,9 @@ $(document).ready(function() {
 		colModel: [{
 			name: 'change_type',
 			index: 'change_type',
-			width: 75
+			width: 75,
+			stype:'select',
+			editoptions:{value:":All;add:Add;update:Update;delete:Delete"}
 		},
 		{
 			name: 'movie',
@@ -17,7 +19,9 @@ $(document).ready(function() {
 		{
 			name: 'diff',
 			index: 'diff',
-			width: 400
+			width: 400,
+			search: false,
+			sortable: false
 		},
 		{
 			name: 'user',
@@ -27,7 +31,8 @@ $(document).ready(function() {
 		{
 			name: 'created_at',
 			index: 'created_at',
-			width: 200
+			width: 200,
+			search: false
 		}],
 		rowNum: 10,
 		//rownumbers: true,

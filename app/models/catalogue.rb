@@ -32,11 +32,20 @@ class Catalogue < ActiveRecord::Base
     }
   end
   
-  def get_revisions(page,limit,sidx,sord)
+  def get_revisions(page,limit,sidx,sord,type,movie,user)
 	offset = limit * (page -1)
-	page_revisions = 
-	revisions.limit(limit).offset(offset).order(sidx + " " + sord).includes(:movie, :user)
-	count = revisions.count
+	search_revisions = revisions
+	if type
+		search_revisions = search_revisions.where("change_type = ?",type)
+	end
+	if movie
+		search_revisions = search_revisions.joins(:movie).where("movies.name like ?",'%'+movie+'%')
+	end
+	if user
+		search_revisions = search_revisions.joins(:user).where("users.login like ?",'%'+user+'%')
+	end
+	page_revisions = search_revisions.limit(limit).offset(offset).order(sidx + " " + sord).includes(:movie, :user)
+	count = search_revisions.count
 	
 	total_pages = (count.to_f/limit.to_f).ceil
     rows = Array.new(page_revisions.length)

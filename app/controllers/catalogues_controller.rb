@@ -102,7 +102,7 @@ class CataloguesController < ApplicationController
 
 	respond_to do |format|
       format.html # new.html.erb
-      format.json  { render :json => @catalogue.get_revisions(params[:page].to_i,params[:rows].to_i,params[:sidx],params[:sord]) }
+      format.json  { render :json => @catalogue.get_revisions(params[:page].to_i,params[:rows].to_i,params[:sidx],params[:sord],params[:change_type],params["movies.name"],params["users.login"]) }
     end
   end
 
