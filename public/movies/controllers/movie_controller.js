@@ -39,7 +39,8 @@ $.Controller.extend('Movies.Controllers.Movie',
 			{
 				name: 'added',
 				index: 'added',
-				width: 200
+				width: 200,
+				search: false
 			}],
 			rowNum: 20,
 			rownumbers: true,

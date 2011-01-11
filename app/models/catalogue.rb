@@ -7,22 +7,18 @@ class Catalogue < ActiveRecord::Base
     return movies
   end
   
-  def get_movies(page,limit,sidx,sord)
+  def get_movies(page,limit,sidx,sord,name,year)
     offset = limit * (page -1)
-    
-#    movies = 
-#    Movie.joins('LEFT OUTER JOIN movie_holders ON movie_holders.movie_id = movies.id')
-#         .where('movie_holders.catalogue_id' => self.id)
-#         .limit(limit).offset(offset)
-#         .order(sidx + " " + sord)
-#    count =
-#    Movie.joins('LEFT OUTER JOIN movie_holders ON movie_holders.movie_id = movies.id')
-#         .where('movie_holders.catalogue_id' => self.id)
-#         .count
      
-    page_movies = movies.limit(limit).offset(offset).order(sidx + " " + 
-sord)
-	count = movies.count
+    searched_movies = movies
+    if name
+		searched_movies = searched_movies.where("name LIKE ?",'%'+name+'%')
+    end
+    if year
+		searched_movies = searched_movies.where("year = ?",year)
+    end
+    page_movies = searched_movies.limit(limit).offset(offset).order(sidx + " " + sord)
+	count = searched_movies.count
      
     total_pages = (count.to_f/limit.to_f).ceil
     rows = Array.new(page_movies.length)

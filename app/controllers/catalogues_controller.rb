@@ -78,7 +78,7 @@ class CataloguesController < ApplicationController
 	sidx = params[:sidx]
 	sord = params[:sord]
 
-	@movies = @catalogue.get_movies(page,limit,sidx,sord)
+	@movies = @catalogue.get_movies(page,limit,sidx,sord,params[:name],params[:year])
 
 	respond_to do |format|
       format.json { render :json => @movies }
