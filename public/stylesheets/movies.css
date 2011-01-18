@@ -114,3 +114,7 @@ del.differ{
 	margin-left: auto ;
 	margin-right: auto ;
 }
+
+.long {
+    width:300px;
+}

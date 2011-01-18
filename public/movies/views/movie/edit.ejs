@@ -5,7 +5,7 @@
 	</div>
 	<p>
 		<label for="name">Name:</label>
-		<%= input_field_tag('movie[name]', this.name) %>
+		<%= input_field_tag('movie[name]', this.name, "text", {class: "long"}) %>
 	</p>
 	<p>
 		<label for="year">Year Released:</label>
@@ -39,12 +39,16 @@
 		<%= input_field_tag('movie[added]', this.added) %>
 	</p>
 	<p>
-		<label for="summary">Summary:</label>
+		<label for="summary">Summary:</label><br />
 		<%= text_area_tag('movie[summary]', this.summary) %>
 	</p>
 	<p>
-		<label for="notes">Notes:</label>
+		<label for="notes">Notes:</label><br />
 		<%= text_area_tag('movie[notes]', this.notes) %>
+	</p>
+	<p>
+		<label for="cover">Cover:</label>
+		<%= input_field_tag('movie[cover]', this.cover, "text", {class: "long"}) %>
 	</p>
 	<p>
 		<button type="button" class="update">Update</button>
