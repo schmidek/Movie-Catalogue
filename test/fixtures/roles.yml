@@ -4,3 +4,6 @@ admin:
 write:
     id: 2
     title: write
+read:
+    id: 3
+    title: read

@@ -26,7 +26,7 @@ class UserSessionsController < ApplicationController
 	respond_to do |format|
 	    if @user_session.save
 			user = @user_session.record
-			format.json { render :json => { :api_key => user.single_access_token, :catalogue => user.catalogue_id } }
+			format.json { render :json => { :api_key => user.single_access_token, :catalogue => user.catalogue_id, :permissions => user.role_symbols } }
 	    else
 	        format.json { render :json => { :error => 402 } }
 	    end

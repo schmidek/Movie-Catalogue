@@ -50,7 +50,7 @@ class MovieTest < ActiveSupport::TestCase
 	a.save
 	a.name = "b"
 	a.enable_dirty_associations do
-	diff = a.diff
+		diff = a.diff
 		assert_equal({"name" => [["a","b"]]}, diff)
 	end
   end
@@ -64,6 +64,20 @@ class MovieTest < ActiveSupport::TestCase
 	a.enable_dirty_associations do
 		diff = a.diff
 		assert_equal({"name" => [["a","b"]]}, diff)
+	end
+  end
+  
+  test "url diff" do 
+    a = Movie.new
+    a.name = "a"
+    a.cover = "http://ia.media-imdb.com/images/M/MV5BMTE5OTYzMzc0MV5BMl5BanBnXkFtZTcwNjQ0NTI1MQ@@._V1._SX200_SY280.jpg"
+    a.rating = 7
+    a.save
+    a.cover = "http://ia.media-imdb.com/images/M/MV5BMTE5OTYzMzc0MV5BMl5BanBnXkFtZTcwNjQ0NTI1MQ@@._V1._SX200_SY280.jpg"
+    a.rating = 8
+    a.enable_dirty_associations do
+		diff = a.diff
+		assert_equal({"rating" => [["7","8"]]}, diff)
 	end
   end
   

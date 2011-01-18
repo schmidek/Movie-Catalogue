@@ -9,6 +9,16 @@ class ApiTest < ActionDispatch::IntegrationTest
     assert_equal nil, JSON.parse(response.body)["error"]
     assert_equal '0l93SHddA0cfCPXusE7', JSON.parse(response.body)["api_key"]
     assert_equal 1, JSON.parse(response.body)["catalogue"]
+    assert_equal ["admin"], JSON.parse(response.body)["permissions"]
+  end
+  
+  test "test get api key guest" do
+    get_via_redirect "/user_sessions/create_api.json", :password => 'test', :login => 'guest'
+    assert_response :success
+    assert_equal nil, JSON.parse(response.body)["error"]
+    assert_equal '0l93SHddA0cfCPXusE1', JSON.parse(response.body)["api_key"]
+    assert_equal 1, JSON.parse(response.body)["catalogue"]
+    assert_equal ["read"], JSON.parse(response.body)["permissions"]
   end
 
   test "apiv1 update_many one" do
