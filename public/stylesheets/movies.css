@@ -103,6 +103,7 @@ del.differ{
 
 .ui-jqgrid tr.jqgrow td {
   white-space: normal !important;
+  word-wrap: break-word;
   height:auto;
   vertical-align:text-top;
   padding-top:2px;
