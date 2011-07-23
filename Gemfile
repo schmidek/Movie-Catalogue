@@ -9,7 +9,7 @@ group :development, :test do
   gem 'sqlite3-ruby', :require => 'sqlite3'
 end
 group :production do
-  gem 'mysql'
+  gem 'pg'
 end
 
 gem 'json'
