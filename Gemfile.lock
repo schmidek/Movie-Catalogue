@@ -1,5 +1,6 @@
-PATH
-  remote: .
+GIT
+  remote: git://github.com/schmidek/differ.git
+  revision: 450b858d9b4af006acc57ad7afa92cb7aa6bbf03
   specs:
     differ (0.2.0)
 
