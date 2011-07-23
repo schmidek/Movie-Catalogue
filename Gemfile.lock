@@ -1,5 +1,5 @@
 PATH
-  remote: /home/jay/Projects/differ
+  remote: .
   specs:
     differ (0.1.1)
 
@@ -81,7 +81,7 @@ PLATFORMS
 DEPENDENCIES
   authlogic
   declarative_authorization
-  differ!
+  differ (= 0.1.1)!
   json
   pg
   rails (= 3.0.0)

@@ -13,7 +13,7 @@ group :production do
 end
 
 gem 'json'
-gem 'differ', :path => "../../differ"
+gem 'differ', '0.1.1', :path => '.'
 
 # Use unicorn as the web server
 # gem 'unicorn'
