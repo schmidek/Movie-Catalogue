@@ -2,8 +2,14 @@
 
 
 add:
-  id: 1
+  id: 2
   catalogue_id: 1
   user: 1
   movie_id: 1
   change_type: add
+delete:
+  id: 1
+  catalogue_id: 2
+  user: 1
+  movie_id: 1
+  change_type: delete

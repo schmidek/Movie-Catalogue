@@ -50,14 +50,26 @@ class ApiTest < ActionDispatch::IntegrationTest
   
   test "apiv1 new_revisions" do
     num = Revision.count
-	get_via_redirect "/catalogues/1/apiv1/new_revisions.json", :number => 0, :api_key => "0l93SHddA0cfCPXusE7"
-	assert_response :success
-	print response.body
-	assert_equal num, JSON.parse(response.body)["movies"].length
-	assert_equal 1, JSON.parse(response.body)["number"]
 	get_via_redirect "/catalogues/1/apiv1/new_revisions.json", :number => 1, :api_key => "0l93SHddA0cfCPXusE7"
 	assert_response :success
+	assert_equal 1, JSON.parse(response.body)["movies"].length
+	assert_equal 2, JSON.parse(response.body)["number"]
+	get_via_redirect "/catalogues/1/apiv1/new_revisions.json", :number => 2, :api_key => "0l93SHddA0cfCPXusE7"
+	assert_response :success
 	assert_equal 0, JSON.parse(response.body)["movies"].length
+  end
+  
+  test "apiv1 new_revisions with delete" do
+    num = Revision.count
+	get_via_redirect "/catalogues/1/apiv1/new_revisions.json", :number => 0, :api_key => "0l93SHddA0cfCPXusE7"
+	assert_response :success
+	assert_equal 2, JSON.parse(response.body)["number"]
+	assert_equal 1, JSON.parse(response.body)["movies"].length
+	assert_equal 1, JSON.parse(response.body)["deletes"].length
+	get_via_redirect "/catalogues/1/apiv1/new_revisions.json", :number => 1, :api_key => "0l93SHddA0cfCPXusE7"
+	assert_response :success
+	assert_equal 1, JSON.parse(response.body)["movies"].length
+	assert_equal 0, JSON.parse(response.body)["deletes"].length
   end
   
 end

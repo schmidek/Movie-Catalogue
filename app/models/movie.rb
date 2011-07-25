@@ -21,13 +21,16 @@ class Movie < ActiveRecord::Base
     revision = revisions.build(:change_type => "delete",
 					 :catalogue_id => self.catalogue_id)
 	revision.user = Authorization.current_user
-	active = false
+	self.active = false
 	save
   end
 
   def diff
     diff = {}
 	self.changes.each do |key, value|
+		if key == 'active'
+			next
+		end
 		a = value[0].to_s || ''
 		b = value[1].to_s || ''
 		#find shortest diff method
@@ -66,10 +69,12 @@ class Movie < ActiveRecord::Base
   
   private
   def make_change
-	revision = revisions.build(:diff => diff.to_json,
-					 :change_type => "update",
-					 :catalogue_id => self.catalogue_id)
-	revision.user = Authorization.current_user
+    if (not diff.empty?)
+	  revision = revisions.build(:diff => diff.to_json,
+								 :change_type => "update",
+								 :catalogue_id => self.catalogue_id)
+	  revision.user = Authorization.current_user
+	end
   end
   
   def activate

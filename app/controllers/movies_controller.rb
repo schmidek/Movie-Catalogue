@@ -116,11 +116,11 @@ class MoviesController < ApplicationController
   # DELETE /movies/1.xml
   def destroy
     @movie = @catalogue.movies.find(params[:id])
-    @movie.destroy
+    @movie.inactivate
 
     respond_to do |format|
       format.html { redirect_to(movies_url) }
-      format.xml  { head :ok }
+      format.json { render :json => {:success => true} }
     end
   end
 

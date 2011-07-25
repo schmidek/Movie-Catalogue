@@ -203,7 +203,8 @@ $.Controller.extend('Movies.Controllers.Movie',
 	 *	 Listens for movies being destroyed and removes them from being displayed.
 	 */
 	"movie.destroyed subscribe": function( called, movie ) {
-		movie.elements().remove(); //removes ALL elements
+		$("#moviegrid").trigger("reloadGrid");
+		//movie.elements().remove(); //removes ALL elements
 	},
 
 	addDialog: function() {

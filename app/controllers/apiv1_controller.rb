@@ -18,7 +18,12 @@ class Apiv1Controller < ApplicationController
 		number = 0
 	end
     respond_to do |format|
-		format.json { render :json => { :number => number,:movies => @revisions.collect{ |r| r.movie} }}
+		format.json { render :json => 
+			{ :number => number,
+			  :movies => @revisions.where("change_type <> ?",'delete').collect{ |r| r.movie},
+			  :deletes => @revisions.where("change_type = ?",'delete').collect{ |r| r.movie_id} 
+			}
+		}
 	end
   end
 
@@ -45,6 +50,11 @@ class Apiv1Controller < ApplicationController
 					if ids
 						movie.genre_ids = ids
 					end
+				end
+			end
+			if params.has_key?("deletes")
+				params[:deletes].each do |d|
+					Movie.find(d).inactivate
 				end
 			end
 			@catalogue.save!

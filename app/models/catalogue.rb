@@ -10,7 +10,7 @@ class Catalogue < ActiveRecord::Base
   def get_movies(page,limit,sidx,sord,name,year)
     offset = limit * (page -1)
      
-    searched_movies = movies
+    searched_movies = movies.where("active = ?",true)
     if name
 		searched_movies = searched_movies.where("name LIKE ?",'%'+name+'%')
     end

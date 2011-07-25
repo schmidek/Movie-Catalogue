@@ -14,6 +14,7 @@ class MovieTest < ActiveSupport::TestCase
 	assert movie.save, "Save must be successful"
 	dbmovie = Movie.find_by_name("A")
 	assert dbmovie
+	assert dbmovie.active
 	assert_equal("A", dbmovie.name)
 	count = Revision.count
 	assert_equal(2, count, "A revision must have been created")
@@ -30,6 +31,20 @@ class MovieTest < ActiveSupport::TestCase
 	assert movie.save, "Save must be successful"
 	assert_equal("B", movie.name)
 	assert_equal(2, movie.revisions.length, "A revision must have been created")
+  end
+  
+  test "delete" do
+	movie = Movie.new(:name => "A")
+	assert movie.save, "Save must be successful"
+	assert movie.inactivate, "Invalidate must be successful"
+	dbmovie = Movie.find_by_name("A")
+	assert dbmovie
+	assert((not dbmovie.active), "Deleted movie must not be active")
+	count = Revision.count
+	assert_equal(3, count, "A revision must have been created")
+	dbrevision = dbmovie.revisions.last
+	assert dbrevision, "Revision must be linked to the movie"
+	assert_equal("delete", dbrevision.change_type)
   end
   
   test "changes" do

@@ -60,7 +60,20 @@ $.Model.extend('Movies.Models.Movie',
  	 * @param {Function} error a callback that should be called with an object of errors.
 	 */
 	destroy: function( id, success, error ){
-		alert("Not Implemented");
+		var self = this;
+		$.ajax({
+			url: 'movies/'+id+'.json',
+			type: 'post',
+			dataType: 'json',
+			data: {'_method':'delete'},
+			success: function(){
+				//INVALIDATE Cache
+				delete self.cache[id];
+				self.publish("destroyed");
+				if(success){ success(); }
+			},
+			error: error
+		});
 	},
 	/**
 	 * Creates a movie.
