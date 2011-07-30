@@ -15,7 +15,7 @@
   <%= yield :head %>
 </head>
 <body>
-
+  <div id="content">
 	<div id="header">
 		<a class="logo" href="/">
 			<img class="default" src="/images/logo.png" alt="movies" />
@@ -49,9 +49,12 @@
       <p class="error"><%= flash[:error] %></p>
     <% end %>
 
-	<div id="content">
+	<div id="body">
 <%= yield %>
 	</div>
-
+	<div id="footer">
+		<a href="http://schmidekmovies.appspot.com/MovieCatalogue.jnlp">Download the Desktop Client</a>
+	</div>
+  </div>
 </body>
 </html>

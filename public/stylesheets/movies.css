@@ -10,6 +10,15 @@
 	padding-top:0;margin-top:0;
 }
 
+#container {
+   min-height:100%;
+   position:relative;
+}
+
+#body {
+	padding-bottom:60px;
+}
+
 #header {
 	padding: 2% 5%;
 	margin-bottom:4%;
@@ -117,4 +126,13 @@ del.differ{
 
 .long {
     width:300px;
+}
+
+#footer {
+   position:absolute;
+   bottom:0;
+   padding-left:5%;
+   width:90%;
+   height:60px;
+   text-align: center;
 }
