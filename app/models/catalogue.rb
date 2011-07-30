@@ -12,7 +12,7 @@ class Catalogue < ActiveRecord::Base
      
     searched_movies = movies.where("active = ?",true)
     if name
-		searched_movies = searched_movies.where("name LIKE ?",'%'+name+'%')
+		searched_movies = searched_movies.where("lower(name) LIKE ?",'%'+name.downcase+'%')
     end
     if year
 		searched_movies = searched_movies.where("year = ?",year)
@@ -39,10 +39,10 @@ class Catalogue < ActiveRecord::Base
 		search_revisions = search_revisions.where("change_type = ?",type)
 	end
 	if movie
-		search_revisions = search_revisions.joins(:movie).where("movies.name like ?",'%'+movie+'%')
+		search_revisions = search_revisions.joins(:movie).where("lower(movies.name) like ?",'%'+movie.downcase+'%')
 	end
 	if user
-		search_revisions = search_revisions.joins(:user).where("users.login like ?",'%'+user+'%')
+		search_revisions = search_revisions.joins(:user).where("lower(users.login) like ?",'%'+user.downcase+'%')
 	end
 	page_revisions = search_revisions.limit(limit).offset(offset).order(sidx + " " + sord).includes(:movie, :user)
 	count = search_revisions.count
