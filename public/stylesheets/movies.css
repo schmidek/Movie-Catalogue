@@ -15,10 +15,6 @@
    position:relative;
 }
 
-#body {
-	padding-bottom:60px;
-}
-
 #header {
 	padding: 2% 5%;
 	margin-bottom:4%;
@@ -129,10 +125,10 @@ del.differ{
 }
 
 #footer {
-   position:absolute;
-   bottom:0;
+   clear:both;
+   padding-top:40px;
    padding-left:5%;
    width:90%;
-   height:60px;
+   height:20px;
    text-align: center;
 }
