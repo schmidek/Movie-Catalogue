@@ -103,7 +103,7 @@ $.Model.extend('Movies.Models.Movie',
 	getInfo: function(id,success,error){
 		var self = this;
 		$.getJSON('/tmdb/getInfo?id=' + id, function( data ) {
-			self.parseMovie(data[0],success,error);
+			self.parseMovie(data,success,error);
 		});
 	},
 	
@@ -111,22 +111,14 @@ $.Model.extend('Movies.Models.Movie',
 		var movie = new Object();
 		movie.name = info.name;
 		movie.added = new Date();
-		for ( var i in info.posters ) {
-			var poster = info.posters[i].image;
-			if ( poster.size == "cover" ) {
-				movie.cover = poster.url;
-				break;
-			}
+		if(info.covers.length > 0){
+			movie.cover = info.covers[0];
 		}
-		movie.year = info.released;
-		movie.summary = info.overview;
-		movie.imdb = info.imdb_id;
+		movie.year = info.year;
+		movie.summary = info.summary;
+		movie.imdb = info.imdb;
 		movie.trailer = info.trailer;
-		var genres = new Array();
-		for ( var i in info.genres ) {
-			genres.push(info.genres[i].name);
-		}
-		movie.genres = genres;
+		movie.genres = info.genres;
 		var wrapped = this.wrap(movie);
 		success(wrapped);
 	}
