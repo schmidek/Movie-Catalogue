@@ -11,16 +11,16 @@ class TmdbController < ApplicationController
 				URI.parse("http://www.thetvdb.com/api/GetSeries.php?seriesname="+URI.escape($1)+"&language=en")
 			)
 			hash = XmlSimple.xml_in(result.body)
-			series = hash['Series']
-			if series
-				movies = series.collect{|i| parseTvdb(i,$2)}
+			if hash.has_key?('Series')
+				series = hash['Series']
+				movies = series.reject{|i| not i.class == Hash}.collect{|i| parseTvdb(i,$2)}
 			end
 		else
 			result = Net::HTTP.get_response(
 				URI.parse("http://api.themoviedb.org/2.1/Movie.search/en/json/"+Site::Application.config.tmdb_api_key+"/" + URI.escape(name))
 			)
 			hash = JSON.parse(result.body)
-			movies = hash.collect{|i| parseTmdbMovie(i)}
+			movies = hash.reject{|i| not i.class == Hash}.collect{|i| parseTmdbMovie(i)}
         end
         
         render :json => movies
@@ -34,7 +34,6 @@ class TmdbController < ApplicationController
 				URI.parse("http://www.thetvdb.com/data/series/"+URI.escape($2)+"/")
 			)
 			hash = XmlSimple.xml_in(result.body)
-			print hash
 			movie = parseTvdb(hash['Series'][0],$1);
 			movie["name"] = movie["name"] + " Season " + $1
 			

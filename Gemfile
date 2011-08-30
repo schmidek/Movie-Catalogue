@@ -25,7 +25,9 @@ gem 'differ', '0.2.0', :git => 'git://github.com/schmidek/differ.git'
 # To use debugger
 # gem 'ruby-debug'
 
-# gem 'aws-s3', :require => 'aws/s3'
+gem 'aws-s3', :require => 'aws/s3'
+gem 'rmagick', :require => 'RMagick'
+gem 'uuidtools'
 
 gem "authlogic", :require => 'authlogic'
 gem "declarative_authorization", :require => 'declarative_authorization'
