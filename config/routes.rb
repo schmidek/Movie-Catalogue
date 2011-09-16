@@ -1,7 +1,8 @@
 Site::Application.routes.draw do
-  get "tmdb/search"
 
+  get "tmdb/search"
   get "tmdb/getInfo"
+  get "tmdb/getCoversByImdbId"
 
   resources :user_sessions do
     collection do
