@@ -63,6 +63,20 @@ class TmdbController < ApplicationController
         render :json => movie
   end
   
+  def getCoversByImdbId
+    id = params[:imdb]
+	covers = []
+	result = Net::HTTP.get_response(
+		URI.parse("http://api.themoviedb.org/2.1/Movie.imdbLookup/en/json/"+Site::Application.config.tmdb_api_key+"/" + id)
+    )
+	array = JSON.parse(result.body)
+	if array.length > 0
+		movie = parseTmdbMovie(array[0])
+		covers = movie["covers"]
+	end
+	render :json => covers
+  end
+  
   private
   
   def parseTmdbMovie(hash)
