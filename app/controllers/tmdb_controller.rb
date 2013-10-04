@@ -1,9 +1,9 @@
 require 'xmlsimple'
 
 class TmdbController < ApplicationController
-  before_filter :require_user
-  
-  def search
+	before_filter :require_user
+	
+	def search
 		name = params[:name]
 		movies = []
 		if name =~ /(.+) [Ss]eason (\d+)/
@@ -17,16 +17,16 @@ class TmdbController < ApplicationController
 			end
 		else
 			result = Net::HTTP.get_response(
-				URI.parse("http://api.themoviedb.org/2.1/Movie.search/en/json/"+Site::Application.config.tmdb_api_key+"/" + URI.escape(name))
+				URI.parse("http://api.themoviedb.org/3/search/movie?api_key="+Site::Application.config.tmdb_api_key+"&query=" + URI.escape(name))
 			)
 			hash = JSON.parse(result.body)
-			movies = hash.reject{|i| not i.class == Hash}.collect{|i| parseTmdbMovie(i)}
-        end
-        
-        render :json => movies
-  end
+			movies = hash.results.reject{|i| not i.class == Hash}.collect{|i| parseTmdbMovie(i)}
+				end
+				
+				render :json => movies
+	end
 
-  def getInfo
+	def getInfo
 		id = params[:id]
 		movie = Hash.new
 		if id =~ /^__TVSHOW_SEASON_(\d+)__(\d+)/
@@ -52,88 +52,83 @@ class TmdbController < ApplicationController
 			end
 		else
 			result = Net::HTTP.get_response(
-				URI.parse("http://api.themoviedb.org/2.1/Movie.getInfo/en/json/"+Site::Application.config.tmdb_api_key+"/" + id)
-            )
+				URI.parse("http://api.themoviedb.org/3/movie/"+id + "?api_key="+Site::Application.config.tmdb_api_key)
+						)
 			array = JSON.parse(result.body)
 			if array.length > 0
 				movie = parseTmdbMovie(array[0])
 			end
-        end
-        
-        render :json => movie
-  end
-  
-  def getCoversByImdbId
-    id = params[:imdb]
+		end
+
+		render :json => movie
+	end
+	
+	def getCoversByImdbId
+		id = params[:imdb]
 	covers = []
 	result = Net::HTTP.get_response(
-		URI.parse("http://api.themoviedb.org/2.1/Movie.imdbLookup/en/json/"+Site::Application.config.tmdb_api_key+"/" + id)
-    )
-	array = JSON.parse(result.body)
-	if array.length > 0
-		movie = parseTmdbMovie(array[0])
-		covers = movie["covers"]
-	end
+		URI.parse("http://api.themoviedb.org/3/movie/"+id + "/images?api_key="+Site::Application.config.tmdb_api_key)
+		)
+	covers = JSON.parse(result.body)["posters"].collect{|p| "http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w185" + p["file_path"]}
 	render :json => covers
-  end
-  
-  private
-  
-  def parseTmdbMovie(hash)
-	movie = Hash.new
-	movie["id"] = hash["id"]
-	movie["name"] = hash["name"]
-	movie["imdb"] = hash["imdb_id"]
-	if hash.has_key?("released")
-		released = hash["released"].to_s
-		begin
-			movie["year"] = Date.parse(released).year
-		rescue Exception=>e
-			logger.debug("Invalid date: "+released)
+	end
+	
+	private
+	
+	def parseTmdbMovie(hash)
+		movie = Hash.new
+		movie["id"] = hash["id"]
+		movie["name"] = hash["title"]
+		if hash.has_key?("imdb_id")
+			movie["imdb"] = hash["imdb_id"]
 		end
-	end
-	if hash.has_key?("trailer")
-		movie["trailer"] = hash["trailer"]
-	end
-	if hash.has_key?("overview")
-		movie["summary"] = hash["overview"]
-	end
-	if hash.has_key?("genres")
-		movie["genres"] = hash["genres"].collect{|g| g["name"]}
-	end
-	if hash.has_key?("posters")
-		covers = hash["posters"].select{|p| p["image"]["size"] == "cover"}
-		if covers
-			movie["covers"] = covers.collect{|p| p["image"]["url"]}
+		if hash.has_key?("release_date")
+			released = hash["release_date"].to_s
+			begin
+				movie["year"] = Date.parse(released).year
+			rescue Exception=>e
+				logger.debug("Invalid date: "+released)
+			end
 		end
-	end
-	return movie
-  end
-  
-  def parseTvdb(hash,season)
-	movie = Hash.new
-	id = hash["id"][0]
-	movie["id"] = "__TVSHOW_SEASON_"+season+"__" + id
-	movie["name"] = hash["SeriesName"][0]
-	if hash.has_key?("FirstAired")
-		released = hash["FirstAired"][0].to_s
-		begin
-			movie["year"] = Date.parse(released).year
-		rescue Exception=>e
-			logger.debug("Invalid date: "+released)
+		if hash.has_key?("trailer")
+			movie["trailer"] = hash["trailer"]
 		end
+		if hash.has_key?("overview")
+			movie["summary"] = hash["overview"]
+		end
+		if hash.has_key?("genres")
+			movie["genres"] = hash["genres"].collect{|g| g["name"]}
+		end
+		if hash.has_key?("poster_path")
+			covers = [ "http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w185" + hash["poster_path"] ];
+		end
+		return movie
 	end
-	if hash.has_key?("Overview")
-		movie["summary"] = hash["Overview"][0]
+	
+	def parseTvdb(hash,season)
+		movie = Hash.new
+		id = hash["id"][0]
+		movie["id"] = "__TVSHOW_SEASON_"+season+"__" + id
+		movie["name"] = hash["SeriesName"][0]
+		if hash.has_key?("FirstAired")
+			released = hash["FirstAired"][0].to_s
+			begin
+				movie["year"] = Date.parse(released).year
+			rescue Exception=>e
+				logger.debug("Invalid date: "+released)
+			end
+		end
+		if hash.has_key?("Overview")
+			movie["summary"] = hash["Overview"][0]
+		end
+		if hash.has_key?("IMDB_ID")
+			movie["imdb"] = hash["IMDB_ID"][0]
+		end
+		if hash.has_key?("Genre")
+			movie["genres"] = hash["Genre"][0].split('|')
+		end
+		movie["covers"] = ["http://www.thetvdb.com/banners/seasons/"+id+"-"+season+".jpg"]
+		return movie
 	end
-	if hash.has_key?("IMDB_ID")
-		movie["imdb"] = hash["IMDB_ID"][0]
-	end
-	if hash.has_key?("Genre")
-		movie["genres"] = hash["Genre"][0].split('|')
-	end
-	movie["covers"] = ["http://www.thetvdb.com/banners/seasons/"+id+"-"+season+".jpg"]
-	return movie
-  end
 
 end
